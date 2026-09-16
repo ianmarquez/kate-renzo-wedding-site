@@ -1,0 +1,61 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
+const navigationItems = [
+  { href: "#home", id: "home", label: "Home" },
+  { href: "#venue", id: "venue", label: "Venue" },
+  { href: "#timeline", id: "timeline", label: "Timeline" },
+  { href: "#dress-code", id: "dress-code", label: "Dress" },
+];
+
+export default function Navigation() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const scrollToSection = (sectionId: string) => {
+    const scrollContainer = document.querySelector("[data-invitation-scroll]");
+    const section = document.getElementById(sectionId);
+
+    if (scrollContainer instanceof HTMLElement && section) {
+      const sectionOffset =
+        section.getBoundingClientRect().top -
+        scrollContainer.getBoundingClientRect().top +
+        scrollContainer.scrollTop;
+
+      scrollContainer.scrollTo({
+        behavior: shouldReduceMotion ? "auto" : "smooth",
+        top: sectionOffset,
+      });
+    }
+  };
+
+  return (
+    <motion.nav
+      aria-label="Invitation sections"
+      animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+      className="fixed inset-x-4 bottom-5 z-30 mx-auto w-fit rounded-full border border-black/10 bg-white/70 px-2 py-2 shadow-[0_12px_32px_rgba(35,35,32,0.12)] backdrop-blur-md sm:bottom-8"
+      initial={{ filter: "blur(10px)", opacity: 0, y: 12 }}
+      transition={{
+        delay: shouldReduceMotion ? 0 : 4,
+        duration: shouldReduceMotion ? 0 : 0.45,
+      }}
+    >
+      <ul className="flex items-center gap-1 text-[0.6rem] font-semibold tracking-[0.13em] text-[#242423] uppercase sm:text-xs">
+        {navigationItems.map(({ href, id, label }) => (
+          <li key={id}>
+            <a
+              className="block rounded-full px-3 py-2 hover:bg-[#f8fff5]"
+              href={href}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(id);
+              }}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </motion.nav>
+  );
+}
