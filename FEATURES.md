@@ -66,6 +66,7 @@ This will be the first section of the page.
 13. The envelope is scaled to 110% of its base size and covers the entire page during the intro. The `R K` seal is scaled to 144% of its base size.
 14. Lock invitation scrolling while the two-second envelope animation is visible. Enable scrolling only after the envelope clears.
 15. Don't include in the navigation bar
+16. After the intro completes, the superimposed message card is clickable and keyboard accessible. Clicking or activating it fades the card away and restores the hero image to full opacity. The revealed hero image is also clickable and keyboard accessible; activating it fades the message card back in without replaying the intro animation. Any empty overlay wrapper above the revealed image must use `pointer-events-none` so it cannot intercept this interaction; the visible card itself must restore pointer events.
 
 ## The Venue section
 
@@ -138,9 +139,8 @@ This will be the first section of the page.
 a gift to send us on our way,`
 5. Second paragraph is `a little something towards our future
 would truly make our day.`
-6. A playful PS disclaimer with content `P.S. To our Shell friends:
-Late gifts are totally acceptable from February 15 onwards.`
-7. Add a playful smiling emoji with thumbs up on the playful disclaimer
+6. Copy `/features/assets/gift/gift_box.png` to `/public/wedding-assets/gift/gift_box.png` and render it with Next.js `Image` above the heading.
+7. Do not render the former Shell-friends P.S. disclaimer or its emoji.
 
 ## Site metadata and favicon
 
@@ -159,7 +159,7 @@ Late gifts are totally acceptable from February 15 onwards.`
 - The Dress Code section is implemented as semantic HTML with four equal-height, non-shrinking attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
 - The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every floating frame uses the same non-shrinking height at each responsive breakpoint, and the central final image always sits in the foreground above the collage. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
 - The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
-- The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, `Come for the love, stay for the party!` heading, the finalized two-paragraph gift message, and the Shell-friends P.S. with a smiling thumbs-up emoji. Its extra bottom padding keeps the card clear of the fixed navigation.
+- The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, the public-served gift-box illustration, `Come for the love, stay for the party!` heading, and the finalized two-paragraph gift message. Its extra bottom padding keeps the card clear of the fixed navigation.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 
@@ -179,6 +179,7 @@ Late gifts are totally acceptable from February 15 onwards.`
 - The envelope movement and scroll lock last two seconds. The envelope is dismissed both by the two-second timer and when its lower flap finishes animating, so the page cannot remain blocked if one completion path is interrupted. No message card is visible during this sequence.
 - At the end of the envelope sequence, the final white invitation card fades in above the softened monogram. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
+- After its entrance, the message card can be clicked or activated with the keyboard to fade it away and reveal the monogram at full opacity. The revealed monogram can be clicked or activated to fade the card back in without repeating the intro. Its otherwise empty overlay layer does not accept pointer events, ensuring the monogram remains clickable.
 - The bottom navigation blurs in after the final card and its message complete their reveal.
 - Below the hero artwork, render the wedding date as large semibold text: `07 FEBRUARY 2027, 3:30 PM`.
 

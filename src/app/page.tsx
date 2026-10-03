@@ -746,6 +746,14 @@ function GiftsSection() {
           <p className="text-xs font-semibold tracking-eyebrow text-moss uppercase">
             A Note On Gifts
           </p>
+          <Image
+            alt="Illustrated wrapped gift"
+            className="mx-auto mt-5 h-24 w-auto object-contain sm:h-32"
+            height={1174}
+            sizes="(max-width: 640px) 96px, 128px"
+            src="/wedding-assets/gift/gift_box.png"
+            width={1339}
+          />
           <h2 className="mt-3 font-serif text-4xl tracking-tighter text-ink sm:text-6xl">
             Come for the love, stay for the party!
           </h2>
@@ -761,14 +769,6 @@ function GiftsSection() {
               would truly make our day.
             </p>
           </div>
-
-          <p className="mx-auto mt-10 max-w-xl border-t border-ink/10 pt-6 text-base leading-7 text-moss sm:mt-12 sm:text-lg">
-            P.S. To our Shell friends: Late gifts are totally acceptable from
-            February 15 onwards.{" "}
-            <span aria-label="Smiling face with thumbs up" role="img">
-              🙂👍
-            </span>
-          </p>
         </div>
       </div>
     </section>
@@ -834,6 +834,8 @@ function InvitationEnvelope({
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
   const [showEnvelope, setShowEnvelope] = useState(true);
+  const [showHeroCard, setShowHeroCard] = useState(true);
+  const [hasDismissedHeroCard, setHasDismissedHeroCard] = useState(false);
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -865,10 +867,35 @@ export default function Home() {
             </p>
             <div className="hero-frame relative">
               <motion.div
-                animate={{ opacity: 0.38 }}
+                animate={{ opacity: showHeroCard ? 0.38 : 1 }}
+                aria-label={showHeroCard ? undefined : "Show wedding message"}
+                className={
+                  showHeroCard
+                    ? undefined
+                    : "cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-moss"
+                }
                 initial={{ opacity: 1 }}
+                onClick={() => {
+                  if (!showHeroCard) {
+                    setShowHeroCard(true);
+                  }
+                }}
+                onKeyDown={(event) => {
+                  if (
+                    !showHeroCard &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    setShowHeroCard(true);
+                  }
+                }}
+                role={showHeroCard ? undefined : "button"}
+                tabIndex={showHeroCard ? -1 : 0}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 1.6,
+                  delay:
+                    shouldReduceMotion || !showHeroCard || hasDismissedHeroCard
+                      ? 0
+                      : 1.6,
                   duration: shouldReduceMotion ? 0 : 0.55,
                 }}
               >
@@ -881,47 +908,84 @@ export default function Home() {
                   width={1010}
                 />
               </motion.div>
-              <div className="absolute inset-0 flex items-center justify-center px-7 text-center sm:px-20">
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  initial={{ opacity: 0 }}
-                  transition={{
-                    delay: shouldReduceMotion ? 0 : 2,
-                    duration: shouldReduceMotion ? 0 : 0.2,
-                  }}
-                >
-                  <InvitationMessageCard className="w-full max-w-2xl">
-                    <motion.p
-                      animate={{
-                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                        filter: "blur(0px)",
-                        opacity: 1,
-                        rotateX: 0,
-                        rotateZ: 0,
-                        y: 0,
-                      }}
-                      className="relative max-w-xl font-serif text-3xl leading-invitation tracking-tighter text-ink sm:text-5xl lg:text-6xl"
-                      initial={{
-                        clipPath:
-                          "polygon(8% 0, 92% 0, 100% 18%, 100% 100%, 0 100%, 0 16%)",
-                        filter: "blur(2px)",
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-7 text-center sm:px-20">
+                <AnimatePresence>
+                  {showHeroCard && (
+                    <motion.div
+                      animate={{ opacity: 1 }}
+                      aria-label="Reveal wedding monogram"
+                      className="pointer-events-auto w-full max-w-2xl cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-moss"
+                      exit={{
                         opacity: 0,
-                        rotateX: -46,
-                        rotateZ: 1.5,
-                        y: 16,
+                        transition: {
+                          duration: shouldReduceMotion ? 0 : 0.35,
+                        },
                       }}
-                      style={{ transformOrigin: "100% 0" }}
+                      initial={{ opacity: 0 }}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setHasDismissedHeroCard(true);
+                        setShowHeroCard(false);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setHasDismissedHeroCard(true);
+                          setShowHeroCard(false);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
                       transition={{
-                        delay: shouldReduceMotion ? 0 : 2.15,
-                        duration: shouldReduceMotion ? 0 : 0.65,
-                        ease: [0.22, 0.8, 0.2, 1],
+                        delay:
+                          shouldReduceMotion || hasDismissedHeroCard ? 0 : 2,
+                        duration: shouldReduceMotion ? 0 : 0.2,
                       }}
                     >
-                      We&apos;re tying the knot! Join us in the garden for a day
-                      filled with love!
-                    </motion.p>
-                  </InvitationMessageCard>
-                </motion.div>
+                      <InvitationMessageCard className="w-full">
+                        <motion.p
+                          animate={{
+                            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                            filter: "blur(0px)",
+                            opacity: 1,
+                            rotateX: 0,
+                            rotateZ: 0,
+                            y: 0,
+                          }}
+                          className="relative max-w-xl font-serif text-3xl leading-invitation tracking-tighter text-ink sm:text-5xl lg:text-6xl"
+                          initial={
+                            hasDismissedHeroCard
+                              ? false
+                              : {
+                                  clipPath:
+                                    "polygon(8% 0, 92% 0, 100% 18%, 100% 100%, 0 100%, 0 16%)",
+                                  filter: "blur(2px)",
+                                  opacity: 0,
+                                  rotateX: -46,
+                                  rotateZ: 1.5,
+                                  y: 16,
+                                }
+                          }
+                          style={{ transformOrigin: "100% 0" }}
+                          transition={{
+                            delay:
+                              shouldReduceMotion || hasDismissedHeroCard
+                                ? 0
+                                : 2.15,
+                            duration:
+                              shouldReduceMotion || hasDismissedHeroCard
+                                ? 0
+                                : 0.65,
+                            ease: [0.22, 0.8, 0.2, 1],
+                          }}
+                        >
+                          We&apos;re tying the knot! Join us in the garden for a
+                          day filled with love!
+                        </motion.p>
+                      </InvitationMessageCard>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
             <p className="mt-8 text-center text-xl font-semibold tracking-time text-ink sm:text-3xl">
