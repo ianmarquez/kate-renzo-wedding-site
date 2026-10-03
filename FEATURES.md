@@ -56,7 +56,7 @@ This will be the first section of the page.
 3. Make sure that the initial look is still mildly visible even when the superimposed text is rendered in.
 4. The animation should feel like the super imposed text is being stuck on like a peeling off animation in reverse.
 5. This section should not have a card like container for the entire content as the content is the initial look already.
-6. Initial load should feel like opening an invitation envelope. Make sure to add this animation when loading the site. The trigger should be on page load
+6. Initial load should show a closed invitation envelope. The envelope must remain still until the user clicks anywhere on it, then begin the opening animation.
 7. The imposed text should be contained in the faux white card being opened by the animation and as the animation ends becomes the content.
 8. The ivies for this section should be placed on the white card containing the text.
 9. Do not show an intermediate invitation card while the envelope is opening. The only visible message card is the final white card that appears after the envelope clears.
@@ -64,7 +64,7 @@ This will be the first section of the page.
 11. The top flap should touch the bottom part of the envelope before the motion begins.
 12. The initials marker is attached to the top flap and must move upward with it.
 13. The envelope is scaled to 110% of its base size and covers the entire page during the intro. The `R K` seal is scaled to 144% of its base size.
-14. Lock invitation scrolling while the two-second envelope animation is visible. Enable scrolling only after the envelope clears.
+14. Lock invitation scrolling while the closed envelope is visible and throughout its two-second opening animation. Enable scrolling only after the envelope clears.
 15. Don't include in the navigation bar
 16. After the intro completes, the superimposed message card is clickable and keyboard accessible. Clicking or activating it fades the card away and restores the hero image to full opacity. The revealed hero image is also clickable and keyboard accessible; activating it fades the message card back in without replaying the intro animation. Any empty overlay wrapper above the revealed image must use `pointer-events-none` so it cannot intercept this interaction; the visible card itself must restore pointer events.
 
@@ -141,6 +141,7 @@ a gift to send us on our way,`
 would truly make our day.`
 6. Copy `/features/assets/gift/gift_box.png` to `/public/wedding-assets/gift/gift_box.png` and render it with Next.js `Image` above the heading.
 7. Do not render the former Shell-friends P.S. disclaimer or its emoji.
+8. Render the QR-only, lossless public assets `/public/wedding-assets/gift/bdo-qr.png`, `/public/wedding-assets/gift/bpi-qr.png`, and `/public/wedding-assets/gift/gcash-qr.png` with Next.js `Image` beneath the gift message. They contain the original BDO, BPI, and GCash QR patterns and must never be redrawn, regenerated, or otherwise altered. Use a clearly labeled, responsive scan area; it should stack on mobile and use three equal cards on larger screens. Keep each provider label centered beneath its QR code at every breakpoint.
 
 ## Site metadata and favicon
 
@@ -159,7 +160,7 @@ would truly make our day.`
 - The Dress Code section is implemented as semantic HTML with four equal-height, non-shrinking attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
 - The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every floating frame uses the same non-shrinking height at each responsive breakpoint, and the central final image always sits in the foreground above the collage. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
 - The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
-- The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, the public-served gift-box illustration, `Come for the love, stay for the party!` heading, and the finalized two-paragraph gift message. Its extra bottom padding keeps the card clear of the fixed navigation.
+- The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, the public-served gift-box illustration, `Come for the love, stay for the party!` heading, and the finalized two-paragraph gift message. A `Scan to send your love` area presents the unaltered, original BDO, BPI, and GCash QR patterns in equal responsive cards, with each provider title centered below its code at every breakpoint. Its extra bottom padding keeps the card clear of the fixed navigation.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 
@@ -176,7 +177,7 @@ would truly make our day.`
 - The hero uses `/wedding-assets/hero/initial-look.png` as its initial monogram artwork. It is not enclosed by the general card treatment.
 - On page load, a green envelope covers the entire page. It is scaled to 110% of its base size, uses a `1rem` radius, and prevents scrolling until it clears.
 - The envelope begins with its flat top flap and bottom pocket touching along their shared edge. The top flap carries a `K R` initials marker scaled to 144% of its base size, has a shadow, and slides upward. The bottom pocket slides downward at the same time. The initials stay attached to the top flap throughout. The envelope halves do not fade; their slide is the only exit animation.
-- The envelope movement and scroll lock last two seconds. The envelope is dismissed both by the two-second timer and when its lower flap finishes animating, so the page cannot remain blocked if one completion path is interrupted. No message card is visible during this sequence.
+- The envelope remains closed and blocks scrolling until the user clicks it. That click begins the two-second opening animation; the envelope clears after its lower flap finishes moving. No message card is visible during this sequence.
 - At the end of the envelope sequence, the final white invitation card fades in above the softened monogram. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
 - After its entrance, the message card can be clicked or activated with the keyboard to fade it away and reveal the monogram at full opacity. The revealed monogram can be clicked or activated to fade the card back in without repeating the intro. Its otherwise empty overlay layer does not accept pointer events, ensuring the monogram remains clickable.

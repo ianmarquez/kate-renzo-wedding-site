@@ -734,6 +734,30 @@ function RsvpSection() {
   );
 }
 
+const giftQrCodes = [
+  {
+    alt: "BDO InstaPay QR code",
+    height: 720,
+    label: "BDO",
+    src: "/wedding-assets/gift/bdo-qr.png",
+    width: 720,
+  },
+  {
+    alt: "BPI InstaPay QR code",
+    height: 500,
+    label: "BPI",
+    src: "/wedding-assets/gift/bpi-qr.png",
+    width: 500,
+  },
+  {
+    alt: "GCash InstaPay QR code",
+    height: 620,
+    label: "GCash",
+    src: "/wedding-assets/gift/gcash-qr.png",
+    width: 620,
+  },
+];
+
 function GiftsSection() {
   return (
     <section
@@ -769,6 +793,34 @@ function GiftsSection() {
               would truly make our day.
             </p>
           </div>
+
+          <div className="mt-10 border-t border-ink/10 pt-6 sm:mt-12 sm:pt-8">
+            <p className="text-xs font-semibold tracking-eyebrow text-moss uppercase">
+              Scan to send your love
+            </p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-3 sm:gap-4">
+              {giftQrCodes.map((code) => (
+                <figure
+                  className="flex flex-col items-center gap-3 rounded-xl border border-mint-border bg-mint p-3 text-center sm:block sm:p-4"
+                  key={code.src}
+                >
+                  <div className="flex h-44 w-32 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-page p-2 sm:h-48 sm:w-full sm:p-3">
+                    <Image
+                      alt={code.alt}
+                      className="h-full w-full object-contain"
+                      height={code.height}
+                      sizes="(max-width: 640px) 128px, 220px"
+                      src={code.src}
+                      width={code.width}
+                    />
+                  </div>
+                  <figcaption className="font-serif text-2xl text-ink sm:mt-3 sm:text-xl">
+                    {code.label}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -791,19 +843,34 @@ function InvitationMessageCard({
 }
 
 function InvitationEnvelope({
+  hasStarted,
   onOpen,
   shouldReduceMotion,
 }: {
+  hasStarted: boolean;
   onOpen: () => void;
   shouldReduceMotion: boolean | null;
 }) {
   return (
     <motion.div
-      aria-hidden="true"
-      className="fixed inset-0 z-50 scale-110 overflow-hidden rounded-2xl"
+      aria-label="Open wedding invitation"
+      className="fixed inset-0 z-50 scale-110 cursor-pointer overflow-hidden rounded-2xl"
+      onClick={() => {
+        if (!hasStarted) {
+          onOpen();
+        }
+      }}
+      onKeyDown={(event) => {
+        if (!hasStarted && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          onOpen();
+        }
+      }}
+      role="button"
+      tabIndex={0}
     >
       <motion.div
-        animate={{ y: "-100%" }}
+        animate={{ y: hasStarted ? "-100%" : 0 }}
         className="absolute inset-x-0 top-0 z-20 h-1/2 rounded-t-2xl bg-envelope-top shadow-envelope"
         initial={{ y: 0 }}
         transition={{
@@ -817,10 +884,14 @@ function InvitationEnvelope({
         </div>
       </motion.div>
       <motion.div
-        animate={{ y: "100%" }}
+        animate={{ y: hasStarted ? "100%" : 0 }}
         className="absolute inset-x-0 bottom-0 z-10 h-1/2 rounded-b-2xl bg-envelope-bottom"
         initial={{ y: 0 }}
-        onAnimationComplete={onOpen}
+        onAnimationComplete={() => {
+          if (hasStarted) {
+            onOpen();
+          }
+        }}
         transition={{
           delay: shouldReduceMotion ? 0 : 0.15,
           duration: shouldReduceMotion ? 0 : 1.85,
@@ -834,18 +905,9 @@ function InvitationEnvelope({
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
   const [showEnvelope, setShowEnvelope] = useState(true);
+  const [hasStartedEnvelope, setHasStartedEnvelope] = useState(false);
   const [showHeroCard, setShowHeroCard] = useState(true);
   const [hasDismissedHeroCard, setHasDismissedHeroCard] = useState(false);
-
-  useEffect(() => {
-    if (shouldReduceMotion) {
-      return undefined;
-    }
-
-    const timer = window.setTimeout(() => setShowEnvelope(false), 2000);
-
-    return () => window.clearTimeout(timer);
-  }, [shouldReduceMotion]);
 
   const isEnvelopeVisible = showEnvelope && !shouldReduceMotion;
 
@@ -1009,7 +1071,14 @@ export default function Home() {
       <AnimatePresence>
         {isEnvelopeVisible && (
           <InvitationEnvelope
-            onOpen={() => setShowEnvelope(false)}
+            hasStarted={hasStartedEnvelope}
+            onOpen={() => {
+              if (hasStartedEnvelope) {
+                setShowEnvelope(false);
+              } else {
+                setHasStartedEnvelope(true);
+              }
+            }}
             shouldReduceMotion={shouldReduceMotion}
           />
         )}
