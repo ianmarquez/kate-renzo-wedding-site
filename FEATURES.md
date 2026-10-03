@@ -176,7 +176,7 @@ Late gifts are totally acceptable from February 15 onwards.`
 - The hero uses `/wedding-assets/hero/initial-look.png` as its initial monogram artwork. It is not enclosed by the general card treatment.
 - On page load, a green envelope covers the entire page. It is scaled to 110% of its base size, uses a `1rem` radius, and prevents scrolling until it clears.
 - The envelope begins with its flat top flap and bottom pocket touching along their shared edge. The top flap carries a `K R` initials marker scaled to 144% of its base size, has a shadow, and slides upward. The bottom pocket slides downward at the same time. The initials stay attached to the top flap throughout. The envelope halves do not fade; their slide is the only exit animation.
-- The envelope movement and scroll lock last two seconds. No message card is visible during this sequence.
+- The envelope movement and scroll lock last two seconds. The envelope is dismissed both by the two-second timer and when its lower flap finishes animating, so the page cannot remain blocked if one completion path is interrupted. No message card is visible during this sequence.
 - At the end of the envelope sequence, the final white invitation card fades in above the softened monogram. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
 - The bottom navigation blurs in after the final card and its message complete their reveal.
