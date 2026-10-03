@@ -1,25 +1,12 @@
-import { FlatCompat } from "@eslint/eslintrc";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
-
-const airbnbConfig = compat
-  .extends("airbnb")
-  .map((config) =>
-    Object.fromEntries(
-      Object.entries(config).filter(([key]) => key !== "plugins"),
-    ),
-  );
+import prettier from "eslint-config-prettier/flat";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  ...airbnbConfig,
-  ...compat.extends("prettier"),
+  prettier,
   {
     files: ["**/*.{ts,tsx}"],
     rules: {

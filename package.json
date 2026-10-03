@@ -2,6 +2,7 @@
   "name": "kate-renzo-wedding-site",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,13 +18,11 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.6",
