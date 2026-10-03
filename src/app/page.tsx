@@ -287,7 +287,7 @@ function DressCodeSection() {
               >
                 <Image
                   alt={look.alt}
-                  className="max-h-full w-full object-contain object-bottom"
+                  className="h-full w-auto max-w-full shrink-0 object-contain object-bottom"
                   height={look.height}
                   sizes="(max-width: 640px) 22vw, 112px"
                   src={look.src}
@@ -460,7 +460,7 @@ function GallerySection() {
           <div className="relative mt-8 aspect-square sm:mt-10">
             <button
               aria-label="View the final gallery photo"
-              className="absolute inset-x-12 top-1/2 z-10 block aspect-video -translate-y-1/2 overflow-hidden rounded-2xl border border-ink/10 shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:inset-x-20"
+              className="absolute inset-x-12 top-1/2 z-30 block aspect-video -translate-y-1/2 overflow-hidden rounded-2xl border border-ink/10 shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:inset-x-20"
               onClick={() => setSelectedPhoto(10)}
               type="button"
             >
@@ -492,7 +492,7 @@ function GallerySection() {
                         y: [0, index % 2 === 0 ? -5.6 : 5.6, 0],
                       }
                 }
-                className={`absolute z-20 size-20 overflow-hidden rounded-xl border border-ink/10 shadow-map focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:size-32 ${galleryFloatPositions[index]}`}
+                className={`absolute z-20 h-24 w-20 shrink-0 overflow-hidden rounded-xl border border-ink/10 shadow-map focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:h-36 sm:w-28 ${galleryFloatPositions[index]}`}
                 key={photo.src}
                 onClick={() => setSelectedPhoto(index)}
                 transition={{
@@ -734,6 +734,47 @@ function RsvpSection() {
   );
 }
 
+function GiftsSection() {
+  return (
+    <section
+      id="gifts"
+      className="flex min-h-svh snap-start items-center justify-center px-5 pt-5 pb-28 sm:px-10 sm:pt-10 sm:pb-32"
+    >
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
+        <IvyCorners />
+        <div className="relative mx-auto max-w-3xl text-center">
+          <p className="text-xs font-semibold tracking-eyebrow text-moss uppercase">
+            A Note On Gifts
+          </p>
+          <h2 className="mt-3 font-serif text-4xl tracking-tighter text-ink sm:text-6xl">
+            Come for the love, stay for the party!
+          </h2>
+
+          <div className="mx-auto mt-8 max-w-2xl space-y-5 text-lg leading-relaxed text-guidance sm:mt-10 sm:text-2xl">
+            <p>
+              If you were thinking of giving
+              <br />a gift to send us on our way,
+            </p>
+            <p>
+              a little something towards our future
+              <br />
+              would truly make our day.
+            </p>
+          </div>
+
+          <p className="mx-auto mt-10 max-w-xl border-t border-ink/10 pt-6 text-base leading-7 text-moss sm:mt-12 sm:text-lg">
+            P.S. To our Shell friends: Late gifts are totally acceptable from
+            February 15 onwards.{" "}
+            <span aria-label="Smiling face with thumbs up" role="img">
+              🙂👍
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function InvitationMessageCard({
   className,
   children,
@@ -895,6 +936,8 @@ export default function Home() {
         <GallerySection />
 
         <RsvpSection />
+
+        <GiftsSection />
       </main>
       <AnimatePresence>
         {isEnvelopeVisible && (

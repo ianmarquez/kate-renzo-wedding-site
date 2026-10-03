@@ -2,7 +2,7 @@
 
 This document contains all the features needed for this weddding website to work. Agents should treat this as the master plan of the website.
 We will be detailing each section/feature of the website in this document.
-The website is a vertical scrolling website divided into 5 sections.
+The website is a vertical scrolling website divided into 7 sections.
 The final product should be mobile responsive as well.
 
 1. Hero Page
@@ -41,7 +41,7 @@ All interface animation must use Framer Motion. Do not add CSS keyframe or trans
 
 ## Navigation
 
-- A fixed, glass-like navigation bar sits at the bottom of the viewport with Home, Venue, Timeline, and Dress links.
+- A fixed, glass-like navigation bar sits at the bottom of the viewport with Venue, Timeline, Dress, RSVP, and Gifts links. The Hero section is explicitly excluded from navigation.
 - Include every invitation section in the navigation unless that section explicitly states otherwise. Gallery is currently the exception.
 - It remains hidden during the hero intro and blurs into view after the complete animation sequence.
 - Use a `#F8FFF5` hover state only. Do not render a persistent active-section marker.
@@ -103,6 +103,7 @@ This will be the first section of the page.
    - Ladies: Long bright-colored garden dresses
    - Gentlemen: Barong / linen long sleeves & trousers in brown hues
 6. Tighten up the card container so it hugs the content just add the same padding values as the timeline section
+7. The four attire illustrations in the first row must share the same fixed, non-shrinking height at every responsive breakpoint. Size each image by its height with `object-contain` so differing source aspect ratios do not cause any illustration to shrink.
 
 ## The Gallery Section
 
@@ -151,19 +152,20 @@ Late gifts are totally acceptable from February 15 onwards.`
 ### Page structure and styling
 
 - The invitation is a full-screen, vertically scrolling experience. Its `main` element is a `100svh` scroll container with mandatory vertical scroll snapping.
-- Hero, Venue, Timeline, Dress Code, Gallery, and RSVP are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
+- Hero, Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
 - The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls and the seal remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
-- The Dress Code section is implemented as semantic HTML with four attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
-- The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
+- The Dress Code section is implemented as semantic HTML with four equal-height, non-shrinking attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
+- The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every floating frame uses the same non-shrinking height at each responsive breakpoint, and the central final image always sits in the foreground above the collage. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
 - The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
+- The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, `Come for the love, stay for the party!` heading, the finalized two-paragraph gift message, and the Shell-friends P.S. with a smiling thumbs-up emoji. Its extra bottom padding keeps the card clear of the fixed navigation.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 
 ### Navigation
 
-- The navigation is fixed at the bottom of the viewport and links to Home, Venue, Timeline, Dress Code, and RSVP. All sections are included unless their own specification explicitly excludes them; Gallery is intentionally excluded.
+- The navigation is fixed at the bottom of the viewport and links to Venue, Timeline, Dress Code, RSVP, and Gifts. All sections are included unless their own specification explicitly excludes them; Hero and Gallery are intentionally excluded.
 - It remains visually hidden during the intro and blurs into view after all hero animations finish.
 - Navigation links use a `#F8FFF5` hover state. There is no persistent active-section indicator.
 - Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the snapping scroll container to the requested section. Reduced-motion users receive an immediate scroll.

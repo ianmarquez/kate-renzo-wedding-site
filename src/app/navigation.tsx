@@ -3,11 +3,11 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 const navigationItems = [
-  { href: "#home", id: "home", label: "Home" },
   { href: "#venue", id: "venue", label: "Venue" },
   { href: "#timeline", id: "timeline", label: "Timeline" },
   { href: "#dress-code", id: "dress-code", label: "Dress" },
   { href: "#rsvp", id: "rsvp", label: "RSVP" },
+  { href: "#gifts", id: "gifts", label: "Gifts" },
 ];
 
 export default function Navigation() {
