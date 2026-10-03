@@ -9,6 +9,7 @@ The final product should be mobile responsive as well.
 2. The Venue
 3. The Timeline
 4. Dress Code
+5. Gallery
 
 The website has a black and white aesthetic with `#F8FFF5` as its green highlight for supporting cards and controls. Apply the reusable `.grainy` texture class to the body for a subtle paper-like finish.
 Each section will have an ivy like design in each corner. These assets can be found in the dir `/public/wedding-assets/ivy` and are svg files this should be scaled down as the svg files are very resource heavy.
@@ -43,7 +44,7 @@ All interface animation must use Framer Motion. Do not add CSS keyframe or trans
 - Use a `#F8FFF5` hover state only. Do not render a persistent active-section marker.
 - Navigation links smoothly scroll the invitation's snapping scroll container. Reduced-motion users receive an immediate jump.
 
-## Hero Page
+## Hero Section
 
 This will be the first section of the page.
 
@@ -60,7 +61,7 @@ This will be the first section of the page.
 11. The top flap should touch the bottom part of the envelope before the motion begins.
 12. The initials marker is attached to the top flap and must move upward with it.
 13. The envelope is scaled to 110% of its base size and covers the entire page during the intro. The `R K` seal is scaled to 144% of its base size.
-14. Lock invitation scrolling while the three-second envelope animation is visible. Enable scrolling only after the envelope clears.
+14. Lock invitation scrolling while the two-second envelope animation is visible. Enable scrolling only after the envelope clears.
 
 ## The Venue section
 
@@ -99,6 +100,15 @@ This will be the first section of the page.
    - Gentlemen: Barong / linen long sleeves & trousers in brown hues
 6. Tighten up the card container so it hugs the content just add the same padding values as the timeline section
 
+## The Gallery Section
+
+1. Use the source images in `/features/assets/gallery` from `0.jpg` through `9.jpg`, copy them to `/public/wedding-assets/gallery`, and render the public copies with Next.js `Image`.
+2. Present `10.jpg` as the central, wide climax image. Scatter the other ten photos around it as enlarged, individually clickable, overlapping floating frames with intentionally uneven placement, while keeping the two side-adjacent frames clear of the climax image.
+3. Use Framer Motion to give each non-climax frame a gentle 5.6px offset vertical drift and varied rotation. Respect reduced-motion preferences by showing the scattered layout without motion.
+4. Follow the site-wide image delivery rules: use responsive `sizes`, lazy-loaded thumbnails, and `object-cover` within the floating frames.
+5. Each image is a button that opens an accessible dark-room viewer. It must support close, previous, and next controls, plus `Escape`, left arrow, and right arrow keyboard actions. Use Framer Motion for the viewer entry and image-change animation.
+6. Render a subtle, transparent loading-spinner layer behind each floating frame, climax image, and viewer image: it is absolutely centered within the image container and remains behind the Next.js `Image`, so the image naturally covers it when loaded. The layer must not use an opaque background, preserving the dark-room viewer effect. Do not toggle this layer from image load events, which can cause a flash.
+
 ## Site metadata and favicon
 
 - Use a wedding bouquet as the browser favicon.
@@ -114,12 +124,13 @@ This will be the first section of the page.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
 - The Dress Code section is implemented as semantic HTML with four attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
+- The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 
 ### Navigation
 
-- The navigation is fixed at the bottom of the viewport and links to Home, Venue, Timeline, and Dress Code.
+- The navigation is fixed at the bottom of the viewport and links to Home, Venue, Timeline, Dress Code, and Gallery.
 - It remains visually hidden during the intro and blurs into view after all hero animations finish.
 - Navigation links use a `#F8FFF5` hover state. There is no persistent active-section indicator.
 - Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the snapping scroll container to the requested section. Reduced-motion users receive an immediate scroll.
@@ -130,7 +141,7 @@ This will be the first section of the page.
 - The hero uses `/wedding-assets/hero/initial-look.png` as its initial monogram artwork. It is not enclosed by the general card treatment.
 - On page load, a green envelope covers the entire page. It is scaled to 110% of its base size, uses a `1rem` radius, and prevents scrolling until it clears.
 - The envelope begins with its flat top flap and bottom pocket touching along their shared edge. The top flap carries a `K R` initials marker scaled to 144% of its base size, has a shadow, and slides upward. The bottom pocket slides downward at the same time. The initials stay attached to the top flap throughout. The envelope halves do not fade; their slide is the only exit animation.
-- The envelope movement lasts three seconds. No message card is visible during this sequence.
+- The envelope movement and scroll lock last two seconds. No message card is visible during this sequence.
 - At the end of the envelope sequence, the final white invitation card fades in above the softened monogram. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
 - The bottom navigation blurs in after the final card and its message complete their reveal.

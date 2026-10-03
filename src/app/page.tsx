@@ -330,6 +330,253 @@ function DressCodeSection() {
   );
 }
 
+const galleryPhotos = [
+  { height: 6337, src: "/wedding-assets/gallery/0.jpg", width: 4225 },
+  { height: 6767, src: "/wedding-assets/gallery/1.jpg", width: 4511 },
+  { height: 7008, src: "/wedding-assets/gallery/2.jpg", width: 4672 },
+  { height: 4672, src: "/wedding-assets/gallery/3.jpg", width: 7008 },
+  { height: 4672, src: "/wedding-assets/gallery/4.jpg", width: 7008 },
+  { height: 7008, src: "/wedding-assets/gallery/5.jpg", width: 4672 },
+  { height: 7008, src: "/wedding-assets/gallery/6.jpg", width: 4672 },
+  { height: 7008, src: "/wedding-assets/gallery/7.jpg", width: 4672 },
+  { height: 7008, src: "/wedding-assets/gallery/8.jpg", width: 4672 },
+  { height: 4672, src: "/wedding-assets/gallery/9.jpg", width: 7008 },
+  { height: 4672, src: "/wedding-assets/gallery/10.jpg", width: 7008 },
+];
+
+const galleryFloatPositions = [
+  "top-5 left-1",
+  "top-0 left-1/4",
+  "top-10 right-1/4",
+  "top-2 right-2",
+  "top-1/3 -left-10 sm:-left-16",
+  "top-2/3 -right-10 sm:-right-16",
+  "bottom-1 left-4",
+  "bottom-12 left-1/3",
+  "right-1/3 -bottom-3",
+  "right-2 bottom-7",
+];
+
+const galleryFloatRotations = [-12, -5, 7, 13, -9, 10, -14, 5, -7, 11];
+
+type GalleryPhotoProps = {
+  alt: string;
+  className: string;
+  photo: (typeof galleryPhotos)[number];
+  priority: boolean;
+  sizes: string;
+};
+
+function GalleryPhoto({
+  alt,
+  className,
+  photo,
+  priority,
+  sizes,
+}: GalleryPhotoProps) {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 flex items-center justify-center"
+      >
+        <span className="size-6 rounded-full border-2 border-mint-border border-t-moss opacity-60" />
+      </div>
+      <Image
+        alt={alt}
+        className={className}
+        fill
+        priority={priority}
+        sizes={sizes}
+        src={photo.src}
+      />
+    </>
+  );
+}
+
+function GallerySection() {
+  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (selectedPhoto === null) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedPhoto(null);
+      }
+
+      if (event.key === "ArrowLeft") {
+        setSelectedPhoto((current) =>
+          current === null
+            ? current
+            : (current - 1 + galleryPhotos.length) % galleryPhotos.length,
+        );
+      }
+
+      if (event.key === "ArrowRight") {
+        setSelectedPhoto((current) =>
+          current === null ? current : (current + 1) % galleryPhotos.length,
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPhoto]);
+
+  const showPreviousPhoto = () => {
+    setSelectedPhoto((current) =>
+      current === null
+        ? current
+        : (current - 1 + galleryPhotos.length) % galleryPhotos.length,
+    );
+  };
+
+  const showNextPhoto = () => {
+    setSelectedPhoto((current) =>
+      current === null ? current : (current + 1) % galleryPhotos.length,
+    );
+  };
+
+  return (
+    <section
+      id="gallery"
+      className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
+    >
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
+        <IvyCorners />
+        <div className="relative mx-auto max-w-3xl">
+          <p className="text-center text-xs font-semibold tracking-eyebrow text-moss uppercase">
+            Gallery
+          </p>
+          <h2 className="mt-3 text-center font-serif text-4xl tracking-tighter text-ink sm:text-6xl">
+            A few of our favorite moments
+          </h2>
+
+          <div className="relative mt-8 aspect-square sm:mt-10">
+            <button
+              aria-label="View the final gallery photo"
+              className="absolute inset-x-12 top-1/2 z-10 block aspect-video -translate-y-1/2 overflow-hidden rounded-2xl border border-ink/10 shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:inset-x-20"
+              onClick={() => setSelectedPhoto(10)}
+              type="button"
+            >
+              <GalleryPhoto
+                alt="Kate and Renzo walking together"
+                className="object-cover"
+                photo={galleryPhotos[10]}
+                priority={false}
+                sizes="(max-width: 768px) calc(100vw - 10rem), 768px"
+              />
+              <span className="absolute inset-0 bg-darkroom/10" />
+              <span className="absolute inset-x-0 bottom-0 px-4 py-3 text-left text-sm font-semibold tracking-wide text-page sm:text-base">
+                Our next chapter
+              </span>
+            </button>
+
+            {galleryPhotos.slice(0, 10).map((photo, index) => (
+              <motion.button
+                aria-label={`View gallery photo ${index + 1}`}
+                animate={
+                  shouldReduceMotion
+                    ? { rotate: galleryFloatRotations[index], y: 0 }
+                    : {
+                        rotate: [
+                          galleryFloatRotations[index],
+                          galleryFloatRotations[index] + 2,
+                          galleryFloatRotations[index],
+                        ],
+                        y: [0, index % 2 === 0 ? -5.6 : 5.6, 0],
+                      }
+                }
+                className={`absolute z-20 size-20 overflow-hidden rounded-xl border border-ink/10 shadow-map focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss sm:size-32 ${galleryFloatPositions[index]}`}
+                key={photo.src}
+                onClick={() => setSelectedPhoto(index)}
+                transition={{
+                  delay: index * 0.12,
+                  duration: 3.6 + index * 0.12,
+                  ease: "easeInOut",
+                  repeat: shouldReduceMotion ? 0 : Infinity,
+                }}
+                type="button"
+              >
+                <GalleryPhoto
+                  alt="Kate and Renzo together"
+                  className="object-cover"
+                  photo={photo}
+                  priority={false}
+                  sizes="(max-width: 640px) 16vw, 112px"
+                />
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {selectedPhoto !== null && (
+          <motion.div
+            animate={{ opacity: 1 }}
+            aria-label="Gallery image viewer"
+            aria-modal="true"
+            className="fixed inset-0 z-60 flex items-center justify-center bg-darkroom/95 p-5 sm:p-10"
+            initial={{ opacity: 0 }}
+            role="dialog"
+            transition={{ duration: 0.2 }}
+          >
+            <button
+              aria-label="Close image viewer"
+              className="absolute top-5 right-5 z-10 flex size-11 items-center justify-center rounded-full border border-page/30 text-2xl text-page sm:top-8 sm:right-8"
+              onClick={() => setSelectedPhoto(null)}
+              type="button"
+            >
+              ×
+            </button>
+            <button
+              aria-label="View previous photo"
+              className="absolute left-3 z-10 flex size-11 items-center justify-center rounded-full border border-page/30 text-2xl text-page sm:left-8"
+              onClick={showPreviousPhoto}
+              type="button"
+            >
+              ‹
+            </button>
+            <motion.div
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative h-full w-full max-w-6xl"
+              initial={{ opacity: 0, scale: 0.97 }}
+              key={galleryPhotos[selectedPhoto].src}
+              transition={{ duration: 0.25 }}
+            >
+              <GalleryPhoto
+                alt={`Gallery photo ${selectedPhoto + 1} of ${galleryPhotos.length}`}
+                className="object-contain"
+                key={galleryPhotos[selectedPhoto].src}
+                photo={galleryPhotos[selectedPhoto]}
+                priority
+                sizes="100vw"
+              />
+            </motion.div>
+            <button
+              aria-label="View next photo"
+              className="absolute right-3 z-10 flex size-11 items-center justify-center rounded-full border border-page/30 text-2xl text-page sm:right-8"
+              onClick={showNextPhoto}
+              type="button"
+            >
+              ›
+            </button>
+            <p className="absolute bottom-5 text-sm tracking-wide text-page sm:bottom-8">
+              {selectedPhoto + 1} / {galleryPhotos.length}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
 function InvitationMessageCard({
   className,
   children,
@@ -360,7 +607,7 @@ function InvitationEnvelope({
         className="absolute inset-x-0 top-0 z-20 h-1/2 rounded-t-2xl bg-envelope-top shadow-envelope"
         initial={{ y: 0 }}
         transition={{
-          delay: shouldReduceMotion ? 0 : 0.4,
+          delay: shouldReduceMotion ? 0 : 0.15,
           duration: shouldReduceMotion ? 0 : 1.25,
           ease: [0.2, 0.85, 0.22, 1],
         }}
@@ -374,8 +621,8 @@ function InvitationEnvelope({
         className="absolute inset-x-0 bottom-0 z-10 h-1/2 rounded-b-2xl bg-envelope-bottom"
         initial={{ y: 0 }}
         transition={{
-          delay: shouldReduceMotion ? 0 : 0.4,
-          duration: shouldReduceMotion ? 0 : 2.6,
+          delay: shouldReduceMotion ? 0 : 0.15,
+          duration: shouldReduceMotion ? 0 : 1.85,
           ease: [0.2, 0.85, 0.22, 1],
         }}
       />
@@ -392,7 +639,7 @@ export default function Home() {
       return undefined;
     }
 
-    const timer = window.setTimeout(() => setShowEnvelope(false), 3000);
+    const timer = window.setTimeout(() => setShowEnvelope(false), 2000);
 
     return () => window.clearTimeout(timer);
   }, [shouldReduceMotion]);
@@ -420,8 +667,8 @@ export default function Home() {
                 animate={{ opacity: 0.38 }}
                 initial={{ opacity: 1 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 2.6,
-                  duration: shouldReduceMotion ? 0 : 0.85,
+                  delay: shouldReduceMotion ? 0 : 1.6,
+                  duration: shouldReduceMotion ? 0 : 0.55,
                 }}
               >
                 <Image
@@ -438,7 +685,7 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   initial={{ opacity: 0 }}
                   transition={{
-                    delay: shouldReduceMotion ? 0 : 3,
+                    delay: shouldReduceMotion ? 0 : 2,
                     duration: shouldReduceMotion ? 0 : 0.2,
                   }}
                 >
@@ -464,8 +711,8 @@ export default function Home() {
                       }}
                       style={{ transformOrigin: "100% 0" }}
                       transition={{
-                        delay: shouldReduceMotion ? 0 : 3.1,
-                        duration: shouldReduceMotion ? 0 : 0.8,
+                        delay: shouldReduceMotion ? 0 : 2.15,
+                        duration: shouldReduceMotion ? 0 : 0.65,
                         ease: [0.22, 0.8, 0.2, 1],
                       }}
                     >
@@ -487,6 +734,8 @@ export default function Home() {
         <TimelineSection />
 
         <DressCodeSection />
+
+        <GallerySection />
       </main>
       <AnimatePresence>
         {isEnvelopeVisible && (
