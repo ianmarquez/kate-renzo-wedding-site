@@ -37,7 +37,7 @@ export default function Navigation() {
       className="fixed inset-x-4 bottom-5 z-30 mx-auto w-fit rounded-full border border-ink/10 bg-page/70 px-2 py-2 shadow-navigation backdrop-blur-md sm:bottom-8"
       initial={{ filter: "blur(10px)", opacity: 0, y: 12 }}
       transition={{
-        delay: shouldReduceMotion ? 0 : 2.9,
+        delay: shouldReduceMotion ? 0 : 1.3,
         duration: shouldReduceMotion ? 0 : 0.45,
       }}
     >

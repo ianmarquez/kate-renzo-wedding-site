@@ -842,82 +842,16 @@ function InvitationMessageCard({
   );
 }
 
-function InvitationEnvelope({
-  hasStarted,
-  onOpen,
-  shouldReduceMotion,
-}: {
-  hasStarted: boolean;
-  onOpen: () => void;
-  shouldReduceMotion: boolean | null;
-}) {
-  return (
-    <motion.div
-      aria-label="Open wedding invitation"
-      className="fixed inset-0 z-50 scale-110 cursor-pointer overflow-hidden rounded-2xl"
-      onClick={() => {
-        if (!hasStarted) {
-          onOpen();
-        }
-      }}
-      onKeyDown={(event) => {
-        if (!hasStarted && (event.key === "Enter" || event.key === " ")) {
-          event.preventDefault();
-          onOpen();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-    >
-      <motion.div
-        animate={{ y: hasStarted ? "-100%" : 0 }}
-        className="absolute inset-x-0 top-0 z-20 h-1/2 rounded-t-2xl bg-envelope-top shadow-envelope"
-        initial={{ y: 0 }}
-        transition={{
-          delay: shouldReduceMotion ? 0 : 0.15,
-          duration: shouldReduceMotion ? 0 : 1.25,
-          ease: [0.2, 0.85, 0.22, 1],
-        }}
-      >
-        <div className="envelope-seal absolute bottom-0 left-1/2 flex size-11 -translate-x-1/2 translate-y-1/2 scale-[1.44] items-center justify-center rounded-full border border-seal-border bg-seal font-serif text-sm text-seal-text shadow-sm sm:size-14 sm:text-lg">
-          R K
-        </div>
-      </motion.div>
-      <motion.div
-        animate={{ y: hasStarted ? "100%" : 0 }}
-        className="absolute inset-x-0 bottom-0 z-10 h-1/2 rounded-b-2xl bg-envelope-bottom"
-        initial={{ y: 0 }}
-        onAnimationComplete={() => {
-          if (hasStarted) {
-            onOpen();
-          }
-        }}
-        transition={{
-          delay: shouldReduceMotion ? 0 : 0.15,
-          duration: shouldReduceMotion ? 0 : 1.85,
-          ease: [0.2, 0.85, 0.22, 1],
-        }}
-      />
-    </motion.div>
-  );
-}
-
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
-  const [showEnvelope, setShowEnvelope] = useState(true);
-  const [hasStartedEnvelope, setHasStartedEnvelope] = useState(false);
   const [showHeroCard, setShowHeroCard] = useState(true);
   const [hasDismissedHeroCard, setHasDismissedHeroCard] = useState(false);
-
-  const isEnvelopeVisible = showEnvelope && !shouldReduceMotion;
 
   return (
     <>
       <main
         data-invitation-scroll
-        className={`h-svh snap-y snap-mandatory ${
-          isEnvelopeVisible ? "overflow-hidden" : "overflow-y-auto"
-        } bg-page text-ink`}
+        className="h-svh snap-y snap-mandatory overflow-y-auto bg-page text-ink"
       >
         <section
           id="home"
@@ -957,8 +891,8 @@ export default function Home() {
                   delay:
                     shouldReduceMotion || !showHeroCard || hasDismissedHeroCard
                       ? 0
-                      : 1.6,
-                  duration: shouldReduceMotion ? 0 : 0.55,
+                      : 0.1,
+                  duration: shouldReduceMotion ? 0 : 0.45,
                 }}
               >
                 <Image
@@ -1000,7 +934,7 @@ export default function Home() {
                       tabIndex={0}
                       transition={{
                         delay:
-                          shouldReduceMotion || hasDismissedHeroCard ? 0 : 2,
+                          shouldReduceMotion || hasDismissedHeroCard ? 0 : 0.35,
                         duration: shouldReduceMotion ? 0 : 0.2,
                       }}
                     >
@@ -1033,7 +967,7 @@ export default function Home() {
                             delay:
                               shouldReduceMotion || hasDismissedHeroCard
                                 ? 0
-                                : 2.15,
+                                : 0.5,
                             duration:
                               shouldReduceMotion || hasDismissedHeroCard
                                 ? 0
@@ -1068,21 +1002,6 @@ export default function Home() {
 
         <GiftsSection />
       </main>
-      <AnimatePresence>
-        {isEnvelopeVisible && (
-          <InvitationEnvelope
-            hasStarted={hasStartedEnvelope}
-            onOpen={() => {
-              if (hasStartedEnvelope) {
-                setShowEnvelope(false);
-              } else {
-                setHasStartedEnvelope(true);
-              }
-            }}
-            shouldReduceMotion={shouldReduceMotion}
-          />
-        )}
-      </AnimatePresence>
       <Navigation />
     </>
   );

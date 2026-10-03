@@ -9,11 +9,6 @@
   --color-guidance: #4f5e78;
   --color-mint: #f8fff5;
   --color-mint-border: #dce8d7;
-  --color-envelope-top: #e6f1e1;
-  --color-envelope-bottom: #d9ead3;
-  --color-seal: #76936c;
-  --color-seal-border: #59724f;
-  --color-seal-text: #fffaf7;
   --color-darkroom: #121212;
   --color-dress-berry: #ad344c;
   --color-dress-rose: #d84965;
@@ -25,7 +20,6 @@
   --shadow-card: 0 20px 55px rgb(35 35 32 / 8%);
   --shadow-map: 0 16px 38px rgb(35 35 32 / 10%);
   --shadow-navigation: 0 12px 32px rgb(35 35 32 / 12%);
-  --shadow-envelope: 0 12px 20px rgb(35 35 32 / 18%);
   --shadow-message: 0 16px 38px rgb(35 35 32 / 12%);
 
   --tracking-eyebrow: 0.3em;

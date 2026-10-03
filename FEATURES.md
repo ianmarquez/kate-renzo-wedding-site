@@ -43,7 +43,7 @@ All interface animation must use Framer Motion. Do not add CSS keyframe or trans
 
 - A fixed, glass-like navigation bar sits at the bottom of the viewport with Venue, Timeline, Dress, RSVP, and Gifts links. The Hero section is explicitly excluded from navigation.
 - Include every invitation section in the navigation unless that section explicitly states otherwise. Gallery is currently the exception.
-- It remains hidden during the hero intro and blurs into view after the complete animation sequence.
+- It remains hidden during the hero message-card reveal and blurs into view after that animation completes.
 - Use a `#F8FFF5` hover state only. Do not render a persistent active-section marker.
 - Navigation links smoothly scroll the invitation's snapping scroll container. Reduced-motion users receive an immediate jump.
 
@@ -56,17 +56,11 @@ This will be the first section of the page.
 3. Make sure that the initial look is still mildly visible even when the superimposed text is rendered in.
 4. The animation should feel like the super imposed text is being stuck on like a peeling off animation in reverse.
 5. This section should not have a card like container for the entire content as the content is the initial look already.
-6. Initial load should show a closed invitation envelope. The envelope must remain still until the user clicks anywhere on it, then begin the opening animation.
-7. The imposed text should be contained in the faux white card being opened by the animation and as the animation ends becomes the content.
+6. Do not render an envelope, seal, or scroll-blocking intro animation. The invitation must be immediately visible and scrollable on every device.
+7. The imposed text should be contained in a faux white card that fades in above the softened hero image.
 8. The ivies for this section should be placed on the white card containing the text.
-9. Do not show an intermediate invitation card while the envelope is opening. The only visible message card is the final white card that appears after the envelope clears.
-10. The bottom part of the envelope should slide down while the top flap slides up.
-11. The top flap should touch the bottom part of the envelope before the motion begins.
-12. The initials marker is attached to the top flap and must move upward with it.
-13. The envelope is scaled to 110% of its base size and covers the entire page during the intro. The `R K` seal is scaled to 144% of its base size.
-14. Lock invitation scrolling while the closed envelope is visible and throughout its two-second opening animation. Enable scrolling only after the envelope clears.
-15. Don't include in the navigation bar
-16. After the intro completes, the superimposed message card is clickable and keyboard accessible. Clicking or activating it fades the card away and restores the hero image to full opacity. The revealed hero image is also clickable and keyboard accessible; activating it fades the message card back in without replaying the intro animation. Any empty overlay wrapper above the revealed image must use `pointer-events-none` so it cannot intercept this interaction; the visible card itself must restore pointer events.
+9. Don't include in the navigation bar.
+10. After the card finishes its entrance, it is clickable and keyboard accessible. Clicking or activating it fades the card away and restores the hero image to full opacity. The revealed hero image is also clickable and keyboard accessible; activating it fades the message card back in without replaying the initial reveal. Any empty overlay wrapper above the revealed image must use `pointer-events-none` so it cannot intercept this interaction; the visible card itself must restore pointer events.
 
 ## The Venue section
 
@@ -154,7 +148,7 @@ would truly make our day.`
 
 - The invitation is a full-screen, vertically scrolling experience. Its `main` element is a `100svh` scroll container with mandatory vertical scroll snapping.
 - Hero, Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
-- The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls and the seal remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
+- The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
 - The Dress Code section is implemented as semantic HTML with four equal-height, non-shrinking attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
@@ -167,7 +161,7 @@ would truly make our day.`
 ### Navigation
 
 - The navigation is fixed at the bottom of the viewport and links to Venue, Timeline, Dress Code, RSVP, and Gifts. All sections are included unless their own specification explicitly excludes them; Hero and Gallery are intentionally excluded.
-- It remains visually hidden during the intro and blurs into view after all hero animations finish.
+- It remains visually hidden during the hero message-card reveal and blurs into view after that animation finishes.
 - Navigation links use a `#F8FFF5` hover state. There is no persistent active-section indicator.
 - Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the snapping scroll container to the requested section. Reduced-motion users receive an immediate scroll.
 - The navigation component lives in `src/app/navigation.tsx`; it is a client component because it controls navigation scrolling.
@@ -175,10 +169,8 @@ would truly make our day.`
 ### Hero implementation and animation
 
 - The hero uses `/wedding-assets/hero/initial-look.png` as its initial monogram artwork. It is not enclosed by the general card treatment.
-- On page load, a green envelope covers the entire page. It is scaled to 110% of its base size, uses a `1rem` radius, and prevents scrolling until it clears.
-- The envelope begins with its flat top flap and bottom pocket touching along their shared edge. The top flap carries a `K R` initials marker scaled to 144% of its base size, has a shadow, and slides upward. The bottom pocket slides downward at the same time. The initials stay attached to the top flap throughout. The envelope halves do not fade; their slide is the only exit animation.
-- The envelope remains closed and blocks scrolling until the user clicks it. That click begins the two-second opening animation; the envelope clears after its lower flap finishes moving. No message card is visible during this sequence.
-- At the end of the envelope sequence, the final white invitation card fades in above the softened monogram. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
+- There is no envelope, seal, or scroll lock. The page is ready to use on first paint.
+- The monogram softens shortly after page load, then the final white invitation card fades in above it. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
 - After its entrance, the message card can be clicked or activated with the keyboard to fade it away and reveal the monogram at full opacity. The revealed monogram can be clicked or activated to fade the card back in without repeating the intro. Its otherwise empty overlay layer does not accept pointer events, ensuring the monogram remains clickable.
 - The bottom navigation blurs in after the final card and its message complete their reveal.
@@ -186,5 +178,5 @@ would truly make our day.`
 
 ### Motion and accessibility
 
-- All implemented visual motion is Framer Motion: the full-page envelope halves, seal, artwork fade, final-card reveal, message reveal, and navigation entry. Navigation uses the browser's native smooth scrolling API to move the scroll container between sections.
-- `prefers-reduced-motion: reduce` disables the envelope and hero transitions, immediately displays the final hero card, and shows the navigation without its entry animation.
+- All implemented visual motion is Framer Motion: the artwork fade, final-card reveal, message reveal, hero-card toggle, gallery motion, and navigation entry. Navigation uses the browser's native smooth scrolling API to move the scroll container between sections.
+- `prefers-reduced-motion: reduce` disables hero transitions, immediately displays the final hero card, and shows the navigation without its entry animation.
