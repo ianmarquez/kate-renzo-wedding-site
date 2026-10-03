@@ -3,8 +3,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import heroInitialLook from "../../features/assets/hero/initial-look.png";
-import venueSketch from "../../features/assets/venue/ville-sommet-sketch.png";
 import Navigation from "./navigation";
 
 type PlaceholderSectionProps = {
@@ -93,7 +91,7 @@ function VenueSection() {
           className="object-cover opacity-20"
           fill
           sizes="(max-width: 1152px) 100vw, 1152px"
-          src={venueSketch}
+          src="/wedding-assets/venue/ville-sommet-sketch.png"
         />
         <div className="absolute inset-0 bg-white/65" />
         <div className="relative grid w-full items-center gap-10 lg:items-stretch lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
@@ -178,6 +176,103 @@ function VenueSection() {
   );
 }
 
+type TimelineMomentProps = {
+  time: string;
+  title: string;
+  children: React.ReactNode;
+};
+
+function TimelineMoment({ time, title, children }: TimelineMomentProps) {
+  return (
+    <div className="text-center">
+      <div className="mx-auto flex h-20 items-end justify-center text-[#242423] sm:h-24">
+        {children}
+      </div>
+      <p className="mt-3 text-lg font-medium tracking-[0.08em] text-[#59606c] sm:text-xl">
+        {time}
+      </p>
+      <p className="mt-1 text-base tracking-[0.06em] text-[#59606c] sm:text-lg">
+        {title}
+      </p>
+    </div>
+  );
+}
+
+function TimelineSection() {
+  return (
+    <section
+      id="timeline"
+      className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
+    >
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-[1rem] border border-black/10 bg-[#fffefb] px-6 py-12 shadow-[0_20px_55px_rgba(35,35,32,0.08)] sm:px-12 sm:py-14">
+        <IvyCorners />
+        <div className="relative mx-auto max-w-3xl">
+          <p className="text-center text-xs font-semibold tracking-[0.3em] text-[#596c2d] uppercase">
+            The timeline
+          </p>
+          <h2 className="mt-3 text-center font-serif text-5xl tracking-[-0.05em] text-[#242423] sm:text-7xl">
+            Here&apos;s the plan...
+          </h2>
+
+          <div className="mx-auto mt-8 flex max-w-xl items-end justify-center gap-4 sm:mt-10 sm:gap-8">
+            <Image
+              alt="Kate and Renzo beneath a flower-filled wedding arch"
+              className="h-auto w-44 object-contain sm:w-56"
+              height={1242}
+              sizes="(max-width: 640px) 176px, 224px"
+              src="/wedding-assets/timeline/elegant-floral-wedding-arch.png"
+              width={1266}
+            />
+            <div className="pb-2 text-left sm:pb-4">
+              <p className="text-lg font-medium tracking-[0.08em] text-[#59606c] sm:text-2xl">
+                16:00
+              </p>
+              <p className="mt-1 text-sm tracking-[0.06em] text-[#59606c] sm:text-lg">
+                Ceremony
+              </p>
+            </div>
+          </div>
+
+          <div className="my-7 h-px bg-black/25 sm:my-9" />
+
+          <div className="grid grid-cols-3 gap-3 sm:gap-8">
+            <TimelineMoment time="17:30" title="Cocktails">
+              <Image
+                alt="Two cocktail glasses"
+                className="h-16 w-16 object-contain sm:h-20 sm:w-20"
+                height={1254}
+                sizes="(max-width: 640px) 64px, 80px"
+                src="/wedding-assets/timeline/toasting-martini-glasses.png"
+                width={1254}
+              />
+            </TimelineMoment>
+            <TimelineMoment time="19:00" title="Dinner">
+              <Image
+                alt="Dinner place setting"
+                className="h-16 w-20 object-contain sm:h-20 sm:w-24"
+                height={1134}
+                sizes="(max-width: 640px) 80px, 96px"
+                src="/wedding-assets/timeline/elegant-floral-centerpiece.png"
+                width={1387}
+              />
+            </TimelineMoment>
+            <TimelineMoment time="21:00" title="After-party">
+              <Image
+                alt="Disco ball"
+                className="h-16 w-16 object-contain sm:h-20 sm:w-20"
+                height={1254}
+                sizes="(max-width: 640px) 64px, 80px"
+                src="/wedding-assets/timeline/minimalist-disco-ball.png"
+                width={1254}
+              />
+            </TimelineMoment>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function InvitationMessageCard({
   className,
   children,
@@ -214,7 +309,7 @@ function InvitationEnvelope({
         }}
       >
         <div className="envelope-seal absolute bottom-0 left-1/2 flex size-11 -translate-x-1/2 translate-y-1/2 scale-[1.44] items-center justify-center rounded-full border border-[#59724f] bg-[#76936c] font-serif text-sm text-[#fffaf7] shadow-sm sm:size-14 sm:text-lg">
-          K R
+          R K
         </div>
       </motion.div>
       <motion.div
@@ -275,8 +370,10 @@ export default function Home() {
                 <Image
                   alt="Kate and Renzo's wedding monogram"
                   className="h-auto w-full"
+                  height={766}
                   priority
-                  src={heroInitialLook}
+                  src="/wedding-assets/hero/initial-look.png"
+                  width={1010}
                 />
               </motion.div>
               <div className="absolute inset-0 flex items-center justify-center px-7 text-center sm:px-20">
@@ -330,23 +427,7 @@ export default function Home() {
 
         <VenueSection />
 
-        <div id="timeline">
-          <PlaceholderSection eyebrow="The timeline" title="A day to remember">
-            <ComingSoonCard>
-              <p className="font-serif text-2xl">Celebration schedule</p>
-              <p className="mt-3 text-sm leading-6 text-black/60">
-                A thoughtful outline of the day will be added here.
-              </p>
-            </ComingSoonCard>
-            <ComingSoonCard>
-              <p className="font-serif text-2xl">Save the moments</p>
-              <p className="mt-3 text-sm leading-6 text-black/60">
-                We&apos;ll share the moments we cannot wait to celebrate with
-                you.
-              </p>
-            </ComingSoonCard>
-          </PlaceholderSection>
-        </div>
+        <TimelineSection />
 
         <div id="dress-code">
           <PlaceholderSection eyebrow="Dress code" title="Come as you are">
