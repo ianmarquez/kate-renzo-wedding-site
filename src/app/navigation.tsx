@@ -7,7 +7,7 @@ const navigationItems = [
   { href: "#venue", id: "venue", label: "Venue" },
   { href: "#timeline", id: "timeline", label: "Timeline" },
   { href: "#dress-code", id: "dress-code", label: "Dress" },
-  { href: "#gallery", id: "gallery", label: "Gallery" },
+  { href: "#rsvp", id: "rsvp", label: "RSVP" },
 ];
 
 export default function Navigation() {

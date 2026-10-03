@@ -10,6 +10,8 @@ The final product should be mobile responsive as well.
 3. The Timeline
 4. Dress Code
 5. Gallery
+6. RSVP
+7. A Note on Gifts
 
 The website has a black and white aesthetic with `#F8FFF5` as its green highlight for supporting cards and controls. Apply the reusable `.grainy` texture class to the body for a subtle paper-like finish.
 Each section will have an ivy like design in each corner. These assets can be found in the dir `/public/wedding-assets/ivy` and are svg files this should be scaled down as the svg files are very resource heavy.
@@ -40,6 +42,7 @@ All interface animation must use Framer Motion. Do not add CSS keyframe or trans
 ## Navigation
 
 - A fixed, glass-like navigation bar sits at the bottom of the viewport with Home, Venue, Timeline, and Dress links.
+- Include every invitation section in the navigation unless that section explicitly states otherwise. Gallery is currently the exception.
 - It remains hidden during the hero intro and blurs into view after the complete animation sequence.
 - Use a `#F8FFF5` hover state only. Do not render a persistent active-section marker.
 - Navigation links smoothly scroll the invitation's snapping scroll container. Reduced-motion users receive an immediate jump.
@@ -62,6 +65,7 @@ This will be the first section of the page.
 12. The initials marker is attached to the top flap and must move upward with it.
 13. The envelope is scaled to 110% of its base size and covers the entire page during the intro. The `R K` seal is scaled to 144% of its base size.
 14. Lock invitation scrolling while the two-second envelope animation is visible. Enable scrolling only after the envelope clears.
+15. Don't include in the navigation bar
 
 ## The Venue section
 
@@ -108,6 +112,34 @@ This will be the first section of the page.
 4. Follow the site-wide image delivery rules: use responsive `sizes`, lazy-loaded thumbnails, and `object-cover` within the floating frames.
 5. Each image is a button that opens an accessible dark-room viewer. It must support close, previous, and next controls, plus `Escape`, left arrow, and right arrow keyboard actions. Use Framer Motion for the viewer entry and image-change animation.
 6. Render a subtle, transparent loading-spinner layer behind each floating frame, climax image, and viewer image: it is absolutely centered within the image container and remains behind the Next.js `Image`, so the image naturally covers it when loaded. The layer must not use an opaque background, preserving the dark-room viewer effect. Do not toggle this layer from image load events, which can cause a flash.
+7. Don't include this section in the navigation
+
+## RSVP Section
+
+1. Render RSVP as a full-viewport snap section directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
+2. Use the `RSVP` eyebrow and `Save your seat!` as the `h2` heading.
+3. Render this response message: `We really hope you can make it! Please let us know if you’ll be joining us by November 30, 2026, so we can make sure there’s a seat - and plenty of food - waiting for you.` Set `November 30, 2026` in bold moss primary text.
+4. Below the message, render three centered, equal-width contact columns: Phone, Messenger, and Instagram. Use understated top dividers on the main card surface; do not use green supporting cards.
+5. Each column heading includes its minimalist icon in moss primary color. Keep icons at the heading only, never on the individual contact rows. Use the proper Facebook Messenger and Instagram SVG icons.
+6. Use these contact values:
+   - Phone: `Renzo · 09451230423`, `Kate · 09175424784`.
+   - Facebook Messenger: `Renzo Lee`, `Kate Pantig`.
+   - Instagram: `@rnzlee`, `@katepantig`.
+7. Phone numbers should use `tel:` links; Messenger and Instagram values should open their associated public destinations in a new tab with safe `rel` attributes.
+8. Include RSVP in the fixed navigation because sections participate in navigation unless their own specification explicitly excludes them.
+
+## Note on Gifts Section
+
+1. eyebrow should be `A Note On Gifts`
+2. Navigation button is `Gifts`
+3. Heading is `Come for the love, stay for the party!`
+4. First paragraph is `If you were thinking of giving
+a gift to send us on our way,`
+5. Second paragraph is `a little something towards our future
+would truly make our day.`
+6. A playful PS disclaimer with content `P.S. To our Shell friends:
+Late gifts are totally acceptable from February 15 onwards.`
+7. Add a playful smiling emoji with thumbs up on the playful disclaimer
 
 ## Site metadata and favicon
 
@@ -119,18 +151,19 @@ This will be the first section of the page.
 ### Page structure and styling
 
 - The invitation is a full-screen, vertically scrolling experience. Its `main` element is a `100svh` scroll container with mandatory vertical scroll snapping.
-- Hero, Venue, Timeline, and Dress Code are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
+- Hero, Venue, Timeline, Dress Code, Gallery, and RSVP are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
 - The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls and the seal remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
 - The Dress Code section is implemented as semantic HTML with four attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
 - The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
+- The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 
 ### Navigation
 
-- The navigation is fixed at the bottom of the viewport and links to Home, Venue, Timeline, Dress Code, and Gallery.
+- The navigation is fixed at the bottom of the viewport and links to Home, Venue, Timeline, Dress Code, and RSVP. All sections are included unless their own specification explicitly excludes them; Gallery is intentionally excluded.
 - It remains visually hidden during the intro and blurs into view after all hero animations finish.
 - Navigation links use a `#F8FFF5` hover state. There is no persistent active-section indicator.
 - Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the snapping scroll container to the requested section. Reduced-motion users receive an immediate scroll.

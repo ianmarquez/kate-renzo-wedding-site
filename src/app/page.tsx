@@ -577,6 +577,163 @@ function GallerySection() {
   );
 }
 
+function PhoneIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+    >
+      <path
+        d="M7.25 3.75 10 6.5 8.2 8.7a14.3 14.3 0 0 0 7.1 7.1l2.2-1.8 2.75 2.75-1.65 2.35c-.5.7-1.4 1.02-2.2.76C9.9 17.8 6.2 14.1 4.14 7.6c-.26-.8.06-1.7.76-2.2l2.35-1.65Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function MessengerIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="currentColor"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+    >
+      <path d="M12 2C6.48 2 2 6.15 2 11.27c0 2.91 1.45 5.48 3.73 7.17V22l3.4-1.87c.9.25 1.87.38 2.87.38 5.52 0 10-4.15 10-9.24C22 6.15 17.52 2 12 2Zm1.01 12.43-2.55-2.72-4.97 2.72 5.46-5.8 2.61 2.72 4.91-2.72-5.46 5.8Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+    >
+      <rect
+        height="15"
+        rx="4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        width="15"
+        x="4.5"
+        y="4.5"
+      />
+      <circle cx="12" cy="12" r="3.4" stroke="currentColor" strokeWidth="1.7" />
+      <circle cx="16.9" cy="7.2" fill="currentColor" r="1" />
+    </svg>
+  );
+}
+
+function RsvpSection() {
+  return (
+    <section
+      id="rsvp"
+      className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
+    >
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
+        <IvyCorners />
+        <div className="relative mx-auto max-w-3xl text-center">
+          <p className="text-xs font-semibold tracking-eyebrow text-moss uppercase">
+            RSVP
+          </p>
+          <h2 className="mt-3 font-serif text-4xl tracking-tighter text-ink sm:text-6xl">
+            Save your seat!
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-guidance sm:text-lg">
+            We really hope you can make it! Please let us know if you&apos;ll be
+            joining us by{" "}
+            <strong className="font-bold text-moss">November 30, 2026</strong>,
+            so we can make sure there&apos;s a seat - and plenty of food -
+            waiting for you.
+          </p>
+
+          <div className="mt-10 grid gap-8 text-center sm:grid-cols-3 sm:gap-6">
+            <article className="border-t border-ink/10 pt-5">
+              <h3 className="flex items-center justify-center gap-2 font-serif text-2xl text-moss">
+                <PhoneIcon />
+                Phone
+              </h3>
+              <div className="mt-4 space-y-3 text-sm text-guidance sm:text-base">
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="tel:09451230423"
+                >
+                  <span>Renzo · 09451230423</span>
+                </a>
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="tel:09175424784"
+                >
+                  <span>Kate · 09175424784</span>
+                </a>
+              </div>
+            </article>
+            <article className="border-t border-ink/10 pt-5">
+              <h3 className="flex items-center justify-center gap-2 font-serif text-2xl text-moss">
+                <MessengerIcon />
+                Messenger
+              </h3>
+              <div className="mt-4 space-y-3 text-sm text-guidance sm:text-base">
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="https://m.me/RenzoLee"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span>Renzo Lee</span>
+                </a>
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="https://m.me/KatePantig"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span>Kate Pantig</span>
+                </a>
+              </div>
+            </article>
+            <article className="border-t border-ink/10 pt-5">
+              <h3 className="flex items-center justify-center gap-2 font-serif text-2xl text-moss">
+                <InstagramIcon />
+                Instagram
+              </h3>
+              <div className="mt-4 space-y-3 text-sm text-guidance sm:text-base">
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="https://www.instagram.com/rnzlee"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span>@rnzlee</span>
+                </a>
+                <a
+                  className="flex items-center justify-center gap-3"
+                  href="https://www.instagram.com/katepantig"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <span>@katepantig</span>
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function InvitationMessageCard({
   className,
   children,
@@ -736,6 +893,8 @@ export default function Home() {
         <DressCodeSection />
 
         <GallerySection />
+
+        <RsvpSection />
       </main>
       <AnimatePresence>
         {isEnvelopeVisible && (
