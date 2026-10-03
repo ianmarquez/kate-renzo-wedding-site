@@ -5,12 +5,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 
-type PlaceholderSectionProps = {
-  eyebrow: string;
-  title: string;
-  children: React.ReactNode;
-};
-
 function IvyCorners() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -46,46 +40,13 @@ function IvyCorners() {
   );
 }
 
-function PlaceholderSection({
-  eyebrow,
-  title,
-  children,
-}: PlaceholderSectionProps) {
-  return (
-    <section className="snap-start p-5 sm:p-10">
-      <div className="relative isolate flex min-h-[calc(100svh-2.5rem)] items-center overflow-hidden rounded-[1rem] border border-black/10 bg-white px-5 py-20 shadow-[0_20px_55px_rgba(35,35,32,0.08)] sm:min-h-[calc(100svh-5rem)] sm:px-8">
-        <IvyCorners />
-        <div className="relative mx-auto w-full max-w-5xl">
-          <p className="text-center text-xs font-semibold tracking-[0.3em] text-[#596c2d] uppercase">
-            {eyebrow}
-          </p>
-          <h2 className="mt-4 text-center font-serif text-5xl tracking-[-0.05em] text-[#242423] sm:text-7xl">
-            {title}
-          </h2>
-          <div className="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-2">
-            {children}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ComingSoonCard({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-[1rem] border border-[#dce8d7] bg-[#f8fff5] p-7 text-center shadow-[0_14px_32px_rgba(42,35,35,0.06)] sm:p-9">
-      {children}
-    </div>
-  );
-}
-
 function VenueSection() {
   return (
     <section
       id="venue"
       className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
     >
-      <div className="relative isolate w-full max-w-6xl overflow-hidden rounded-[1rem] border border-black/10 bg-white p-8 shadow-[0_20px_55px_rgba(35,35,32,0.08)]">
+      <div className="relative isolate w-full max-w-6xl overflow-hidden rounded-2xl border border-ink/10 bg-page p-8 shadow-card">
         <Image
           alt=""
           className="object-cover opacity-20"
@@ -93,11 +54,11 @@ function VenueSection() {
           sizes="(max-width: 1152px) 100vw, 1152px"
           src="/wedding-assets/venue/ville-sommet-sketch.png"
         />
-        <div className="absolute inset-0 bg-white/65" />
+        <div className="absolute inset-0 bg-page/65" />
         <div className="relative grid w-full items-center gap-10 lg:items-stretch lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
-          <div className="order-2 overflow-hidden rounded-[1rem] border border-black/10 bg-white p-2 shadow-[0_16px_38px_rgba(35,35,32,0.1)] sm:p-3 lg:h-full">
+          <div className="order-2 overflow-hidden rounded-2xl border border-ink/10 bg-page p-2 shadow-map sm:p-3 lg:h-full">
             <iframe
-              className="aspect-video w-full rounded-[1rem] lg:h-full lg:aspect-auto"
+              className="aspect-video w-full rounded-2xl lg:h-full lg:aspect-auto"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               src="https://www.google.com/maps?q=Ville%20Sommet%20Tagaytay%2C%205%20JP%20Rizal%20St%2C%20Sicat%2C%20Alfonso%2C%20Cavite&output=embed"
@@ -105,19 +66,19 @@ function VenueSection() {
             />
           </div>
           <div className="order-1 text-center lg:text-left">
-            <p className="text-xs font-semibold tracking-[0.3em] text-[#596c2d] uppercase">
+            <p className="text-xs font-semibold tracking-eyebrow text-moss uppercase">
               The venue
             </p>
-            <h2 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.05em] text-[#242423] sm:text-7xl">
+            <h2 className="mt-4 font-serif text-5xl leading-display tracking-tighter text-ink sm:text-7xl">
               Meet us in the garden
             </h2>
-            <p className="mx-auto mt-6 max-w-md text-base leading-7 text-black/65 lg:mx-0 lg:text-lg">
+            <p className="mx-auto mt-6 max-w-md text-base leading-7 text-ink/65 lg:mx-0 lg:text-lg">
               A beautiful little spot for our very big day.
             </p>
             <div className="mt-20 flex justify-center gap-3 lg:justify-start">
               <a
                 aria-label="Open Ville Sommet in Google Maps"
-                className="flex size-14 items-center justify-center rounded-full border border-[#dce8d7] bg-[#f8fff5] text-[#242423] sm:size-16"
+                className="flex size-14 items-center justify-center rounded-full border border-mint-border bg-mint text-ink sm:size-16"
                 href="https://www.google.com/maps/search/?api=1&query=Ville%20Sommet%20Tagaytay%2C%205%20JP%20Rizal%20St%2C%20Sicat%2C%20Alfonso%2C%20Cavite"
                 rel="noreferrer"
                 target="_blank"
@@ -139,7 +100,7 @@ function VenueSection() {
               </a>
               <a
                 aria-label="Open Ville Sommet in Waze"
-                className="flex size-14 items-center justify-center rounded-full border border-[#dce8d7] bg-[#f8fff5] text-[#242423] sm:size-16"
+                className="flex size-14 items-center justify-center rounded-full border border-mint-border bg-mint text-ink sm:size-16"
                 href="https://www.waze.com/ul?q=Ville%20Sommet%20Tagaytay&navigate=yes"
                 rel="noreferrer"
                 target="_blank"
@@ -185,13 +146,13 @@ type TimelineMomentProps = {
 function TimelineMoment({ time, title, children }: TimelineMomentProps) {
   return (
     <div className="text-center">
-      <div className="mx-auto flex h-20 items-end justify-center text-[#242423] sm:h-24">
+      <div className="mx-auto flex h-20 items-end justify-center text-ink sm:h-24">
         {children}
       </div>
-      <p className="mt-3 text-lg font-medium tracking-[0.08em] text-[#59606c] sm:text-xl">
+      <p className="mt-3 text-lg font-medium tracking-time text-timeline sm:text-xl">
         {time}
       </p>
-      <p className="mt-1 text-base tracking-[0.06em] text-[#59606c] sm:text-lg">
+      <p className="mt-1 text-base tracking-label text-timeline sm:text-lg">
         {title}
       </p>
     </div>
@@ -204,13 +165,13 @@ function TimelineSection() {
       id="timeline"
       className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
     >
-      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-[1rem] border border-black/10 bg-[#fffefb] px-6 py-12 shadow-[0_20px_55px_rgba(35,35,32,0.08)] sm:px-12 sm:py-14">
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
         <IvyCorners />
         <div className="relative mx-auto max-w-3xl">
-          <p className="text-center text-xs font-semibold tracking-[0.3em] text-[#596c2d] uppercase">
+          <p className="text-center text-xs font-semibold tracking-eyebrow text-moss uppercase">
             The timeline
           </p>
-          <h2 className="mt-3 text-center font-serif text-5xl tracking-[-0.05em] text-[#242423] sm:text-7xl">
+          <h2 className="mt-3 text-center font-serif text-5xl tracking-tighter text-ink sm:text-7xl">
             Here&apos;s the plan...
           </h2>
 
@@ -224,16 +185,16 @@ function TimelineSection() {
               width={1266}
             />
             <div className="pb-2 text-left sm:pb-4">
-              <p className="text-lg font-medium tracking-[0.08em] text-[#59606c] sm:text-2xl">
+              <p className="text-lg font-medium tracking-time text-timeline sm:text-2xl">
                 16:00
               </p>
-              <p className="mt-1 text-sm tracking-[0.06em] text-[#59606c] sm:text-lg">
+              <p className="mt-1 text-sm tracking-label text-timeline sm:text-lg">
                 Ceremony
               </p>
             </div>
           </div>
 
-          <div className="my-7 h-px bg-black/25 sm:my-9" />
+          <div className="my-7 h-px bg-ink/25 sm:my-9" />
 
           <div className="grid grid-cols-3 gap-3 sm:gap-8">
             <TimelineMoment time="17:30" title="Cocktails">
@@ -273,6 +234,102 @@ function TimelineSection() {
   );
 }
 
+const dressCodeLooks = [
+  {
+    alt: "Guest in a bright orange garden dress",
+    height: 2149,
+    src: "/wedding-assets/dresscode/00.png",
+    width: 732,
+  },
+  {
+    alt: "Guest in a barong with dark trousers",
+    height: 1614,
+    src: "/wedding-assets/dresscode/01.png",
+    width: 975,
+  },
+  {
+    alt: "Guest in a flowing sage garden dress",
+    height: 2086,
+    src: "/wedding-assets/dresscode/02.png",
+    width: 754,
+  },
+  {
+    alt: "Guest in linen long sleeves and brown trousers",
+    height: 1962,
+    src: "/wedding-assets/dresscode/03.png",
+    width: 801,
+  },
+];
+
+const dressCodePalette = [
+  { className: "bg-dress-berry", name: "Berry" },
+  { className: "bg-dress-rose", name: "Rose" },
+  { className: "bg-dress-coral", name: "Coral" },
+  { className: "bg-dress-peach", name: "Peach" },
+  { className: "bg-dress-lime", name: "Lime" },
+  { className: "bg-dress-olive", name: "Olive" },
+];
+
+function DressCodeSection() {
+  return (
+    <section
+      id="dress-code"
+      className="flex min-h-svh snap-start items-center justify-center p-5 sm:p-10"
+    >
+      <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
+        <IvyCorners />
+        <div className="relative mx-auto max-w-3xl text-center">
+          <div className="mx-auto grid max-w-xl grid-cols-4 items-end gap-1 sm:gap-5">
+            {dressCodeLooks.map((look) => (
+              <div
+                className="flex h-36 items-end justify-center sm:h-52"
+                key={look.src}
+              >
+                <Image
+                  alt={look.alt}
+                  className="max-h-full w-full object-contain object-bottom"
+                  height={look.height}
+                  sizes="(max-width: 640px) 22vw, 112px"
+                  src={look.src}
+                  width={look.width}
+                />
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-xs font-semibold tracking-eyebrow text-moss uppercase">
+            Dress Code:
+          </p>
+          <h2 className="mt-3 font-serif text-4xl tracking-tighter text-ink sm:text-6xl">
+            Garden Formal
+          </h2>
+
+          <div
+            aria-label="Approved wedding color palette"
+            className="mx-auto mt-8 flex max-w-md justify-center gap-2 sm:mt-10 sm:gap-4"
+          >
+            {dressCodePalette.map((color) => (
+              <span
+                aria-label={`${color.name} approved color`}
+                className={`size-9 rounded-full sm:size-14 ${color.className}`}
+                key={color.name}
+              />
+            ))}
+          </div>
+
+          <div className="mx-auto mt-9 max-w-3xl space-y-2 text-base leading-snug tracking-wide text-guidance sm:mt-11 sm:text-2xl">
+            <p>Ladies: Long bright-colored garden dresses</p>
+            <p>
+              Gentlemen: Barong / linen long sleeves &amp; trousers in brown
+              hues
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function InvitationMessageCard({
   className,
   children,
@@ -296,11 +353,11 @@ function InvitationEnvelope({
   return (
     <motion.div
       aria-hidden="true"
-      className="fixed inset-0 z-50 scale-110 overflow-hidden rounded-[1rem]"
+      className="fixed inset-0 z-50 scale-110 overflow-hidden rounded-2xl"
     >
       <motion.div
         animate={{ y: "-100%" }}
-        className="absolute inset-x-0 top-0 z-20 h-1/2 rounded-t-[1rem] bg-[#e6f1e1] shadow-[0_12px_20px_rgba(35,35,32,0.18)]"
+        className="absolute inset-x-0 top-0 z-20 h-1/2 rounded-t-2xl bg-envelope-top shadow-envelope"
         initial={{ y: 0 }}
         transition={{
           delay: shouldReduceMotion ? 0 : 0.4,
@@ -308,13 +365,13 @@ function InvitationEnvelope({
           ease: [0.2, 0.85, 0.22, 1],
         }}
       >
-        <div className="envelope-seal absolute bottom-0 left-1/2 flex size-11 -translate-x-1/2 translate-y-1/2 scale-[1.44] items-center justify-center rounded-full border border-[#59724f] bg-[#76936c] font-serif text-sm text-[#fffaf7] shadow-sm sm:size-14 sm:text-lg">
+        <div className="envelope-seal absolute bottom-0 left-1/2 flex size-11 -translate-x-1/2 translate-y-1/2 scale-[1.44] items-center justify-center rounded-full border border-seal-border bg-seal font-serif text-sm text-seal-text shadow-sm sm:size-14 sm:text-lg">
           R K
         </div>
       </motion.div>
       <motion.div
         animate={{ y: "100%" }}
-        className="absolute inset-x-0 bottom-0 z-10 h-1/2 rounded-b-[1rem] bg-[#d9ead3]"
+        className="absolute inset-x-0 bottom-0 z-10 h-1/2 rounded-b-2xl bg-envelope-bottom"
         initial={{ y: 0 }}
         transition={{
           delay: shouldReduceMotion ? 0 : 0.4,
@@ -348,14 +405,14 @@ export default function Home() {
         data-invitation-scroll
         className={`h-svh snap-y snap-mandatory ${
           isEnvelopeVisible ? "overflow-hidden" : "overflow-y-auto"
-        } bg-white text-[#242423]`}
+        } bg-page text-ink`}
       >
         <section
           id="home"
           className="relative flex min-h-svh snap-start items-center justify-center overflow-hidden px-5 py-14 sm:px-10"
         >
           <div className="relative w-full max-w-5xl">
-            <p className="mb-6 text-center text-[0.65rem] font-semibold tracking-[0.35em] text-[#596c2d] uppercase sm:mb-8 sm:text-xs">
+            <p className="mb-6 text-center text-kicker font-semibold tracking-hero-eyebrow text-moss uppercase sm:mb-8 sm:text-xs">
               A garden celebration
             </p>
             <div className="hero-frame relative">
@@ -395,7 +452,7 @@ export default function Home() {
                         rotateZ: 0,
                         y: 0,
                       }}
-                      className="relative max-w-xl font-serif text-3xl leading-[1.05] tracking-[-0.045em] text-[#242423] sm:text-5xl lg:text-6xl"
+                      className="relative max-w-xl font-serif text-3xl leading-invitation tracking-tighter text-ink sm:text-5xl lg:text-6xl"
                       initial={{
                         clipPath:
                           "polygon(8% 0, 92% 0, 100% 18%, 100% 100%, 0 100%, 0 16%)",
@@ -419,7 +476,7 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
-            <p className="mt-8 text-center text-xl font-semibold tracking-[0.08em] text-[#242423] sm:text-3xl">
+            <p className="mt-8 text-center text-xl font-semibold tracking-time text-ink sm:text-3xl">
               07 FEBRUARY 2027, 3:30 PM
             </p>
           </div>
@@ -429,22 +486,7 @@ export default function Home() {
 
         <TimelineSection />
 
-        <div id="dress-code">
-          <PlaceholderSection eyebrow="Dress code" title="Come as you are">
-            <ComingSoonCard>
-              <p className="font-serif text-2xl">Attire guidance</p>
-              <p className="mt-3 text-sm leading-6 text-black/60">
-                Garden-friendly style notes are coming soon.
-              </p>
-            </ComingSoonCard>
-            <ComingSoonCard>
-              <p className="font-serif text-2xl">A little inspiration</p>
-              <p className="mt-3 text-sm leading-6 text-black/60">
-                A few color and outfit ideas will live here.
-              </p>
-            </ComingSoonCard>
-          </PlaceholderSection>
-        </div>
+        <DressCodeSection />
       </main>
       <AnimatePresence>
         {isEnvelopeVisible && (

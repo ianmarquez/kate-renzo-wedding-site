@@ -19,6 +19,13 @@ Each section will have an ivy like design in each corner. These assets can be fo
 - Render every page image with Next.js `next/image` (`Image`) for responsive sizing, lazy loading, and optimization. Supply explicit dimensions or `fill` plus `sizes` as appropriate.
 - The only exceptions are non-image embeds (such as the Google Map iframe) and metadata icons, which are registered through Next.js metadata but still point to an asset in `public/wedding-assets/`.
 
+### Tailwind design tokens and utility discipline
+
+- Define the invitation's recurring colors, shadows, typography treatments, and any other reusable visual values as semantic Tailwind v4 `@theme` tokens in `src/app/globals.css`. Use meaningful names such as `ink`, `moss`, `mint`, `card`, and `shadow-card`, rather than repeating literal hex values or raw shadow declarations in components.
+- Consume those values only through their generated semantic utilities (for example, `text-ink`, `bg-mint`, `border-mint-border`, and `shadow-card`). Component files must not contain literal hex colors or inline color styles.
+- Prefer canonical Tailwind utilities whenever one represents the intended value. For example, use `rounded-2xl` for a `1rem` radius, not `rounded-[1rem]`.
+- Use an arbitrary value only when the design requires a value with no suitable canonical Tailwind utility, such as a deliberately nonstandard grid ratio or exact animation scale. When it becomes reusable, promote it to a named semantic token instead.
+
 The ivy with 00 is the top left one, the ivy with 01 is the bottom left while the top-right is 02 and 03 is for the bottom right
 
 each section should feel like a card and the ivies will frame the card.
@@ -81,6 +88,17 @@ This will be the first section of the page.
    - After-party: `/wedding-assets/timeline/minimalist-disco-ball.png`, a square transparent PNG derived from `minimalist_disco_ball_sketch.jpg`.
 7. Preserve each illustration’s aspect ratio with `object-contain` and responsive `sizes`; the supplied final assets are high resolution, so do not use blurry stand-in artwork.
 
+## The Dress Code Section
+
+1. Use `/features/assets/dresscode/Dress Code.png` only as the visual layout reference. DO NOT render it directly; rebuild its layout in HTML.
+2. The four source illustrations live in `/features/assets/dresscode` as `00.png` through `03.png`, in that display order. Copy them to `/public/wedding-assets/dresscode/` and render the public copies through Next.js `Image`.
+3. Below the four images, retain the small `Dress Code` eyebrow and use `Garden Formal` as the section's `h2` heading.
+4. Render the approved palette row from the reference image, using these exact colors in order: `#AD344C`, `#D84965`, `#E95A29`, `#EE7F4D`, `#9FBC3A`, and `#788444`.
+5. The last part of the section contains these lines
+   - Ladies: Long bright-colored garden dresses
+   - Gentlemen: Barong / linen long sleeves & trousers in brown hues
+6. Tighten up the card container so it hugs the content just add the same padding values as the timeline section
+
 ## Site metadata and favicon
 
 - Use a wedding bouquet as the browser favicon.
@@ -94,7 +112,8 @@ This will be the first section of the page.
 - Hero, Venue, Timeline, and Dress Code are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
 - The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls and the seal remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
-- The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments. Dress Code remains a placeholder section.
+- The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
+- The Dress Code section is implemented as semantic HTML with four attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
 

@@ -1,18 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #242423;
-}
+@theme {
+  --color-page: #ffffff;
+  --color-card: #fffefb;
+  --color-ink: #242423;
+  --color-moss: #596c2d;
+  --color-timeline: #59606c;
+  --color-guidance: #4f5e78;
+  --color-mint: #f8fff5;
+  --color-mint-border: #dce8d7;
+  --color-envelope-top: #e6f1e1;
+  --color-envelope-bottom: #d9ead3;
+  --color-seal: #76936c;
+  --color-seal-border: #59724f;
+  --color-seal-text: #fffaf7;
+  --color-dress-berry: #ad344c;
+  --color-dress-rose: #d84965;
+  --color-dress-coral: #e95a29;
+  --color-dress-peach: #ee7f4d;
+  --color-dress-lime: #9fbc3a;
+  --color-dress-olive: #788444;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --shadow-card: 0 20px 55px rgb(35 35 32 / 8%);
+  --shadow-map: 0 16px 38px rgb(35 35 32 / 10%);
+  --shadow-navigation: 0 12px 32px rgb(35 35 32 / 12%);
+  --shadow-envelope: 0 12px 20px rgb(35 35 32 / 18%);
+  --shadow-message: 0 16px 38px rgb(35 35 32 / 12%);
+
+  --tracking-eyebrow: 0.3em;
+  --tracking-time: 0.08em;
+  --tracking-label: 0.06em;
+  --tracking-hero-eyebrow: 0.35em;
+  --leading-display: 0.95;
+  --leading-invitation: 1.05;
+  --text-kicker: 0.65rem;
+  --text-navigation: 0.6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-page);
+  color: var(--color-ink);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,12 +51,12 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid rgb(0 0 0 / 10%);
-  border-radius: 0.125rem;
-  background: #fff;
+  border: 1px solid rgb(36 36 35 / 10%);
+  border-radius: var(--radius-xs);
+  background: var(--color-page);
   padding: 3rem 1.75rem;
   text-align: center;
-  box-shadow: 0 16px 38px rgb(35 35 32 / 12%);
+  box-shadow: var(--shadow-message);
 }
 
 @media (min-width: 640px) {
