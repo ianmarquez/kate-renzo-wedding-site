@@ -79,9 +79,9 @@ This will be the first section of the page.
 
 1. Heading: `Here’s the plan...`, with the small `The timeline` eyebrow above it.
 2. Rebuild the supplied Timeline reference as responsive HTML; do not render the reference image itself as the section content.
-3. Put the ceremony illustration and its `16:00` / `Ceremony` label together in the upper row, with the time label aligned to the right of the arch on desktop and kept adjacent on mobile.
+3. Put the ceremony illustration and its `15:00` / `Ceremony` label together in the upper row, with the time label aligned to the right of the arch on desktop and kept adjacent on mobile.
 4. Separate the ceremony from the evening events with a thin horizontal divider.
-5. Render three equally spaced lower moments: `17:30 Cocktails`, `19:00 Dinner`, and `21:00 After-party`.
+5. Render three equally spaced lower moments: `16:30 Cocktails`, `18:00 Dinner`, and `20:00 After-party`.
 6. Use these final, public-served assets through Next.js `Image`:
    - Ceremony: `/wedding-assets/timeline/elegant-floral-wedding-arch.png` (`Elegant Floral Wedding Arch Portrait.png` source asset).
    - Cocktails: `/wedding-assets/timeline/toasting-martini-glasses.png` (`Toasting Martini Glasses with Confetti.png` source asset).
@@ -175,7 +175,7 @@ would truly make our day.`
 - The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
 - After its entrance, the message card can be clicked or activated with the keyboard to fade it away and reveal the monogram at full opacity. The revealed monogram can be clicked or activated to fade the card back in without repeating the intro. Its otherwise empty overlay layer does not accept pointer events, ensuring the monogram remains clickable.
 - The bottom navigation blurs in after the final card and its message complete their reveal.
-- Below the hero artwork, render the wedding date as large semibold text: `07 FEBRUARY 2027, 3:30 PM`.
+- Below the hero artwork, render the wedding date as large semibold text: `07 FEBRUARY 2027, 3:00 PM`.
 
 ### Motion and accessibility
 

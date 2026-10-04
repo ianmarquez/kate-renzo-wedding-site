@@ -200,7 +200,7 @@ function TimelineSection() {
             />
             <div className="pb-2 text-left sm:pb-4">
               <p className="text-lg font-medium tracking-time text-timeline sm:text-2xl">
-                16:00
+                15:00
               </p>
               <p className="mt-1 text-sm tracking-label text-timeline sm:text-lg">
                 Ceremony
@@ -211,7 +211,7 @@ function TimelineSection() {
           <div className="my-7 h-px bg-ink/25 sm:my-9" />
 
           <div className="grid grid-cols-3 gap-3 sm:gap-8">
-            <TimelineMoment time="17:30" title="Cocktails">
+            <TimelineMoment time="16:30" title="Cocktails">
               <Image
                 alt="Two cocktail glasses"
                 className="h-16 w-16 object-contain sm:h-20 sm:w-20"
@@ -221,7 +221,7 @@ function TimelineSection() {
                 width={1254}
               />
             </TimelineMoment>
-            <TimelineMoment time="19:00" title="Dinner">
+            <TimelineMoment time="18:00" title="Dinner">
               <Image
                 alt="Dinner place setting"
                 className="h-16 w-20 object-contain sm:h-20 sm:w-24"
@@ -231,7 +231,7 @@ function TimelineSection() {
                 width={1387}
               />
             </TimelineMoment>
-            <TimelineMoment time="21:00" title="After-party">
+            <TimelineMoment time="20:00" title="After-party">
               <Image
                 alt="Disco ball"
                 className="h-16 w-16 object-contain sm:h-20 sm:w-20"
@@ -999,7 +999,7 @@ export default function Home() {
               </div>
             </div>
             <p className="mt-8 text-center text-xl font-semibold tracking-time text-ink sm:text-3xl">
-              07 FEBRUARY 2027, 3:30 PM
+              07 FEBRUARY 2027, 3:00 PM
             </p>
           </div>
         </section>
