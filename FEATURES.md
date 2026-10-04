@@ -68,11 +68,12 @@ This will be the first section of the page.
 2. Body: `A beautiful little spot for our very big day.`
 3. Use `/public/wedding-assets/venue/ville-sommet-sketch.png` as a low-opacity background for the Venue card.
 4. Put an embedded Google Map for Ville Sommet in the media panel. It is full-height beside the details on desktop and 16:9 landscape on mobile.
-5. Replace a printed address with accessible icon buttons that link to the venue pin in Google Maps and Waze.
-6. The Venue card hugs its content with `p-8` internal spacing. Its surrounding snap section still fills the viewport.
-7. Do not render ivy in the Venue card.
-8. On desktop, the details are on the left and the map is on the right. On mobile, the details appear before the map.
-9. Keep `mt-20` spacing between the Venue description and map buttons.
+5. Directly below the venue description, render the complete address in italic text one canonical type size larger: `Ville Sommet, 5 J.P. Rizal Street, Sicat, Alfonso, Cavite, Philippines`.
+6. Render accessible Google Maps and Waze links to the venue pin. Each round icon must have its visible provider label centered beneath it.
+7. The Venue card hugs its content with `p-8` internal spacing. Its surrounding snap section still fills the viewport.
+8. Do not render ivy in the Venue card.
+9. On desktop, the details are on the left and the map is on the right. On mobile, the details appear before the map.
+10. Keep `mt-20` spacing between the address and map links.
 
 ## The timeline section
 
@@ -156,7 +157,7 @@ would truly make our day.`
 - The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
 - The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, the public-served gift-box illustration, `Come for the love, stay for the party!` heading, and the finalized two-paragraph gift message. A `Scan to send your love` area presents the unaltered, original BDO, BPI, and GCash QR patterns in equal responsive cards, with each provider title centered below its code at every breakpoint. Its extra bottom padding keeps the card clear of the fixed navigation.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
-- The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, and map icon controls.
+- The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, italic complete address, and labeled Google Maps and Waze controls.
 
 ### Navigation
 
