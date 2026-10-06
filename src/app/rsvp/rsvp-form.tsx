@@ -421,7 +421,7 @@ export default function RsvpForm({
               ? `Thank you, ${selectedInvitee?.name}. Your RSVP has been saved.`
               : submissionState === "error"
                 ? errorMessage
-                : "Please select your invitation and response when you&apos;re ready."}
+                : "Please select your invitation and response when you're ready."}
           </p>
         </div>
       </motion.section>
