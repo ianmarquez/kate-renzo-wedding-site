@@ -2,6 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 
@@ -649,7 +651,11 @@ function InstagramIcon() {
   );
 }
 
-function RsvpSection() {
+function RsvpSection({
+  onRegister,
+}: {
+  onRegister: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
   return (
     <section
       id="rsvp"
@@ -671,6 +677,14 @@ function RsvpSection() {
             so we can make sure there&apos;s a seat - and plenty of food -
             waiting for you.
           </p>
+
+          <Link
+            className="mt-8 inline-flex items-center rounded-full bg-moss px-6 py-3 text-sm font-semibold tracking-label text-page focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-moss sm:text-base"
+            href="/rsvp/"
+            onClick={onRegister}
+          >
+            Register your RSVP
+          </Link>
 
           <div className="mt-10 grid gap-8 text-center sm:grid-cols-3 sm:gap-6">
             <article className="border-t border-ink/10 pt-5">
@@ -857,9 +871,18 @@ function InvitationMessageCard({
 }
 
 export default function Home() {
+  const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
   const [showHeroCard, setShowHeroCard] = useState(true);
   const [hasDismissedHeroCard, setHasDismissedHeroCard] = useState(false);
+  const registerRsvp = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const invitee = new URLSearchParams(window.location.search).get("invitee");
+
+    if (invitee) {
+      event.preventDefault();
+      router.push(`/rsvp/?invitee=${encodeURIComponent(invitee)}`);
+    }
+  };
 
   return (
     <>
@@ -1012,7 +1035,7 @@ export default function Home() {
 
         <GallerySection />
 
-        <RsvpSection />
+        <RsvpSection onRegister={registerRsvp} />
 
         <GiftsSection />
       </main>
