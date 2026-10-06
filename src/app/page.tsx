@@ -57,14 +57,14 @@ function VenueSection() {
           src="/wedding-assets/venue/ville-sommet-sketch.png"
         />
         <div className="absolute inset-0 bg-page/65" />
-        <div className="relative grid w-full items-center gap-10 lg:items-stretch lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
-          <div className="order-2 overflow-hidden rounded-2xl border border-ink/10 bg-page p-2 shadow-map sm:p-3 lg:h-full">
-            <iframe
-              className="aspect-video w-full rounded-2xl lg:h-full lg:aspect-auto"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=Ville%20Sommet%20Tagaytay%2C%205%20JP%20Rizal%20St%2C%20Sicat%2C%20Alfonso%2C%20Cavite&output=embed"
-              title="Google Map of Ville Sommet"
+        <div className="relative z-10 grid w-full items-center gap-10 lg:items-stretch lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+          <div className="relative order-2 min-h-64 overflow-hidden rounded-2xl border border-ink/10 bg-page shadow-map sm:aspect-video lg:h-full lg:aspect-auto">
+            <Image
+              alt="Illustration of Ville Sommet venue"
+              className="object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 45vw"
+              src="/wedding-assets/venue/ville-sommet-sketch.png"
             />
           </div>
           <div className="order-1 text-center lg:text-left">

@@ -106,6 +106,10 @@ export default function RsvpForm({
       return undefined;
     }
 
+    if (searchQuery.trim().length < 3) {
+      return undefined;
+    }
+
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       setIsLoadingInvitees(true);
@@ -309,6 +313,10 @@ export default function RsvpForm({
                   {isLoadingInvitees ? (
                     <p className="px-3 py-2 text-sm text-guidance">
                       Finding invitees...
+                    </p>
+                  ) : searchQuery.trim().length < 3 ? (
+                    <p className="px-3 py-2 text-sm text-guidance">
+                      Type at least 3 characters to search.
                     </p>
                   ) : invitees.length ? (
                     invitees.map((invitee) => (
