@@ -124,6 +124,41 @@ This will be the first section of the page.
    - Instagram: `@rnzlee`, `@katepantig`.
 7. Phone numbers should use `tel:` links; Messenger and Instagram values should open their associated public destinations in a new tab with safe `rel` attributes.
 8. Include RSVP in the fixed navigation because sections participate in navigation unless their own specification explicitly excludes them.
+9. Add a prominent `Register your RSVP` link in this section. It is the only in-site entry point to the dedicated `/rsvp/` response page. When the invitation page has an `invitee` query parameter, forward that UUID into the RSVP link as `/rsvp/?invitee=<GUID>`.
+
+## RSVP Response Page
+
+1. Create a dedicated, responsive response page at `/rsvp/`, styled with the established invitation card, ivy-corner frame, semantic tokens, and Framer Motion entry treatment.
+2. The page is accessed from the `Register your RSVP` call-to-action in the invitation RSVP section; do not add it to the fixed navigation.
+3. Replace free-text names with a searchable invitee dropdown populated from the `public.invitees` database table. The guest must select an existing invitee before submitting an RSVP.
+4. Accept an optional `invitee` query parameter containing an invitee UUID. For example, `/rsvp/?invitee=550e8400-e29b-41d4-a716-446655440000` must look up and preselect that invitee.
+5. Provide an accessible, mutually exclusive Yes/No attendance choice and persist the response through `POST /api/rsvp`.
+6. Dismiss the search results when focus or pointer interaction leaves the invitee picker. Moving focus between its search field and a result remains within the picker and must keep the results available.
+7. Expose `GET /api/invitees` for the searchable picker. It accepts `query` for a name search and `id` for UUID lookup; it returns only invitee IDs and names.
+8. Validate request bodies server-side, use parameterized PostgreSQL queries, and enforce one RSVP per invitee. Unknown invitees, malformed UUIDs, and duplicate responses must be rejected.
+9. Keep `DATABASE_URL` server-only. Add it to ignored local `.env` files and configure the same environment variable in the deployment platform; never expose it with a `NEXT_PUBLIC_` prefix.
+10. Before saving, check whether the selected invitee already has an RSVP through `GET /api/rsvp?inviteeId=<GUID>`. If one exists, show an accessible confirmation modal with the previous Yes/No response and the newly selected response. If the new answer matches the stored answer, explain that it is already saved and provide no update action. Only update a changed answer through `PATCH /api/rsvp` after the guest confirms; allow the guest to keep the previous answer.
+
+### RSVP database schema
+
+Run the following PostgreSQL statements before accepting responses:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE IF NOT EXISTS public.invitees (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.rsvp_responses (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  invitee_id UUID NOT NULL UNIQUE REFERENCES public.invitees(id) ON DELETE RESTRICT,
+  going BOOLEAN NOT NULL
+);
+```
+
+`rsvp_responses.invitee_id` is unique, so an unguessable invitee UUID can submit only one response. Add invitees to `public.invitees` before sending their personalized RSVP links.
 
 ## Note on Gifts Section
 
@@ -154,7 +189,8 @@ would truly make our day.`
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
 - The Dress Code section is implemented as semantic HTML with four equal-height, non-shrinking attire illustrations, a `Dress Code` eyebrow, `Garden Formal` as its `h2` section heading, the six approved color swatches, and the ladies’ and gentlemen’s guidance.
 - The Gallery section is implemented as ten scattered, floating photo frames around a central final image. Every floating frame uses the same non-shrinking height at each responsive breakpoint, and the central final image always sits in the foreground above the collage. Every photo opens an accessible dark-room viewer with previous/next controls and keyboard navigation, and each image has a stable spinner layer behind it during loading.
-- The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
+- The finalized RSVP section follows the invitation card system with an RSVP eyebrow, `Save your seat!` heading, a bold moss response deadline, a `Register your RSVP` call-to-action to `/rsvp/`, and centered Phone, Messenger, and Instagram columns for Renzo and Kate. The moss method headings carry their icons; individual rows remain text-only links.
+- The dedicated `/rsvp/` page provides a searchable database-backed invitee picker, Yes/No attendance selection, and UUID-based `?invitee=` URL prefill support. Its result list closes when focus or pointer interaction leaves the picker. Before an existing RSVP is changed, an accessible modal shows the previous and newly selected responses and requires confirmation; selecting the same answer shows an already-saved message with no update action. After a successful save, show a thank-you modal with a warm anticipation message for `Yes, with joy!` and a gracious acknowledgment for `Regretfully, no`. It submits through a server-side PostgreSQL endpoint and allows one response per invitee.
 - The Note on Gifts section follows RSVP and uses the invitation card system. It has the `A Note On Gifts` eyebrow, the public-served gift-box illustration, `Come for the love, stay for the party!` heading, and the finalized two-paragraph gift message. A `Scan to send your love` area presents the unaltered, original BDO, BPI, and GCash QR patterns in equal responsive cards, with each provider title centered below its code at every breakpoint. Its extra bottom padding keeps the card clear of the fixed navigation.
 - All rendered page imagery is served from `public/wedding-assets/` and uses Next.js `Image`; the wedding-bouquet favicon is configured via `metadata.icons` from the same public asset directory.
 - The Venue section is implemented with the supplied sketch background, embedded map, responsive column ordering, italic complete address, and labeled Google Maps and Waze controls.
