@@ -24,9 +24,13 @@ export async function GET(request: Request) {
       return Response.json({ invitees: result.rows });
     }
 
+    if (!query) {
+      return Response.json({ invitees: [] });
+    }
+
     const result = await rsvpPool.query(
-      "SELECT id::text, name FROM public.invitees WHERE name ILIKE $1 ORDER BY name ASC LIMIT 12",
-      [`%${query}%`],
+      "SELECT id::text, name FROM public.invitees WHERE LOWER(name) = LOWER($1)",
+      [query],
     );
 
     return Response.json({ invitees: result.rows });
