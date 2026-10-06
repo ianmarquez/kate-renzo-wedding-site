@@ -33,7 +33,7 @@ The ivy with 00 is the top left one, the ivy with 01 is the bottom left while th
 
 each section should feel like a card and the ivies will frame the card.
 
-each section should snap into focus and take up the entire view port
+each section should feel like a full-viewport card where practical, but the page must scroll naturally without CSS scroll snapping
 
 each card section should have a bigger margin to make it feel like a set of cards.
 
@@ -45,7 +45,7 @@ All interface animation must use Framer Motion. Do not add CSS keyframe or trans
 - Include every invitation section in the navigation unless that section explicitly states otherwise. Gallery is currently the exception.
 - It remains hidden during the hero message-card reveal and blurs into view after that animation completes.
 - Use a `#F8FFF5` hover state only. Do not render a persistent active-section marker.
-- Navigation links smoothly scroll the invitation's snapping scroll container. Reduced-motion users receive an immediate jump.
+- Navigation links smoothly scroll the invitation's scroll container. Reduced-motion users receive an immediate jump.
 
 ## Hero Section
 
@@ -70,7 +70,7 @@ This will be the first section of the page.
 4. Put an embedded Google Map for Ville Sommet in the media panel. It is full-height beside the details on desktop and 16:9 landscape on mobile.
 5. Directly below the venue description, render the complete address in italic text one canonical type size larger: `Ville Sommet, 5 J.P. Rizal Street, Sicat, Alfonso, Cavite, Philippines`.
 6. Render accessible Google Maps and Waze links to the venue pin. Each round icon must have its visible provider label centered beneath it.
-7. The Venue card hugs its content with `p-8` internal spacing. Its surrounding snap section still fills the viewport.
+7. The Venue card hugs its content with `p-8` internal spacing. Its surrounding section still fills the viewport without scroll snapping.
 8. Do not render ivy in the Venue card.
 9. On desktop, the details are on the left and the venue illustration is on the right. On mobile, the details appear before the venue illustration.
 10. Keep `mt-20` spacing between the address and navigation links.
@@ -113,7 +113,7 @@ This will be the first section of the page.
 
 ## RSVP Section
 
-1. Render RSVP as a full-viewport snap section directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
+1. Render RSVP as a full-viewport section directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
 2. Use the `RSVP` eyebrow and `Save your seat!` as the `h2` heading.
 3. Render this response message: `We really hope you can make it! Please let us know if you’ll be joining us by November 30, 2026, so we can make sure there’s a seat - and plenty of food - waiting for you.` Set `November 30, 2026` in bold moss primary text.
 4. Below the message, render three centered, equal-width contact columns: Phone, Messenger, and Instagram. Use understated top dividers on the main card surface; do not use green supporting cards.
@@ -182,8 +182,10 @@ would truly make our day.`
 
 ### Page structure and styling
 
-- The invitation is a full-screen, vertically scrolling experience. Its `main` element is a `100svh` scroll container with mandatory vertical scroll snapping.
-- Hero, Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts are the implemented sections. Each non-hero section occupies one viewport and is presented as a large white card with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
+- The invitation is a vertically scrolling experience. Its `main` element is a `100svh` scroll container without CSS scroll snapping, so the page always opens at the hero and all content can scroll naturally.
+- The Hero section is intentionally allowed to exceed one viewport because the invitation card follows the date. Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts remain viewport-sized sections where practical, presented as large white cards with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
+- Keep each page section in its own file under `src/app/component/`: `hero.tsx`, `venue.tsx`, `timeline.tsx`, `dress-code.tsx`, `gallery.tsx`, `rsvp.tsx`, and `gifts.tsx`. Shared ivy, invitation-card, and contact icon primitives belong in `shared.tsx`; `src/app/page.tsx` should compose sections and contain only page-level routing behavior.
+- Provide a root `src/app/not-found.tsx` page that follows the invitation card language, hugs its content with a responsive maximum width, and links visitors back to `/` with a clear home CTA. Use all eleven gallery images (`0.jpg` through `10.jpg`) as rounded floating frames distributed around the centered 404 card: across the upper and lower edges and along both sides. Anchor the positions to the card so the frames overlap its edges by 15px on small screens, 10px from `md`, and 5px on desktop. Follow the Gallery section's gentle vertical drift and varied rotations. Keep the card above the photos, make the photos decorative and non-interactive, and respect reduced-motion preferences. Do not include an emphasized center image or gallery click behavior on the 404 page.
 - The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.
 - Ivy asset placement is fixed: `00.svg` top-left, `01.svg` bottom-left, `02.svg` top-right, and `03.svg` bottom-right. Keep the images scaled down and lazy-loaded through `next/image` because their source SVGs are large.
 - The Timeline follows its supplied reference as semantic HTML with the finalized floral wedding arch, toasting martini glasses, floral table centerpiece, and transparent minimalist disco-ball artwork. It includes the ceremony time, divider, and the Cocktails, Dinner, and After-party moments.
@@ -200,20 +202,20 @@ would truly make our day.`
 - The navigation is fixed at the bottom of the viewport and links to Venue, Timeline, Dress Code, RSVP, and Gifts. All sections are included unless their own specification explicitly excludes them; Hero and Gallery are intentionally excluded.
 - It remains visually hidden during the hero message-card reveal and blurs into view after that animation finishes.
 - Navigation links use a `#F8FFF5` hover state. There is no persistent active-section indicator.
-- Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the snapping scroll container to the requested section. Reduced-motion users receive an immediate scroll.
+- Clicking a navigation item prevents the browser's default hash jump and smoothly scrolls the scroll container to the requested section. Reduced-motion users receive an immediate scroll.
 - The navigation component lives in `src/app/navigation.tsx`; it is a client component because it controls navigation scrolling.
 
 ### Hero implementation and animation
 
 - The hero uses `/wedding-assets/hero/initial-look.png` as its initial monogram artwork. It is not enclosed by the general card treatment.
 - There is no envelope, seal, or scroll lock. The page is ready to use on first paint.
-- The monogram softens shortly after page load, then the final white invitation card fades in above it. The card contains the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
-- The message uses a reverse-peel reveal: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The monogram remains visible underneath at reduced opacity.
-- After its entrance, the message card can be clicked or activated with the keyboard to fade it away and reveal the monogram at full opacity. The revealed monogram can be clicked or activated to fade the card back in without repeating the intro. Its otherwise empty overlay layer does not accept pointer events, ensuring the monogram remains clickable.
+- The hero monogram image is always fully visible and is not covered by a superimposed invitation card.
+- After the wedding date line, the invitation card appears in normal document flow with the four ivy corner assets and the message: “We’re tying the knot! Join us in the garden for a day filled with love!”.
+- The invitation card keeps its reverse-peel entrance animation: it begins clipped, slightly rotated, and blurred, then settles flat and fully visible. The card has no toggle, click, or keyboard interaction; its visibility remains on after the entrance animation.
 - The bottom navigation blurs in after the final card and its message complete their reveal.
 - Below the hero artwork, render the wedding date as large semibold text: `07 FEBRUARY 2027, 3:00 PM`.
 
 ### Motion and accessibility
 
-- All implemented visual motion is Framer Motion: the artwork fade, final-card reveal, message reveal, hero-card toggle, gallery motion, and navigation entry. Navigation uses the browser's native smooth scrolling API to move the scroll container between sections.
-- `prefers-reduced-motion: reduce` disables hero transitions, immediately displays the final hero card, and shows the navigation without its entry animation.
+- All implemented visual motion is Framer Motion: the invitation-card reveal, message reveal, gallery motion, and navigation entry. Navigation uses the browser's native smooth scrolling API to move the scroll container between sections.
+- `prefers-reduced-motion: reduce` disables the hero transitions, immediately displays the invitation card, and shows the navigation without its entry animation.

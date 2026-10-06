@@ -54,6 +54,62 @@ body {
   box-shadow: var(--shadow-message);
 }
 
+.not-found-frame-top {
+  top: 0;
+  translate: 0 calc(-100% + 15px);
+}
+
+.not-found-frame-bottom {
+  bottom: 0;
+  translate: 0 calc(100% - 15px);
+}
+
+.not-found-frame-left {
+  left: 0;
+  translate: calc(-100% + 15px) 0;
+}
+
+.not-found-frame-right {
+  right: 0;
+  translate: calc(100% - 15px) 0;
+}
+
+@media (min-width: 48rem) {
+  .not-found-frame-top {
+    translate: 0 calc(-100% + 10px);
+  }
+
+  .not-found-frame-bottom {
+    translate: 0 calc(100% - 10px);
+  }
+
+  .not-found-frame-left {
+    translate: calc(-100% + 10px) 0;
+  }
+
+  .not-found-frame-right {
+    translate: calc(100% - 10px) 0;
+  }
+}
+
+@media (min-width: 64rem) {
+  .not-found-frame-top {
+    translate: 0 calc(-100% + 5px);
+  }
+
+  .not-found-frame-bottom {
+    translate: 0 calc(100% - 5px);
+  }
+
+  .not-found-frame-left {
+    translate: calc(-100% + 5px) 0;
+  }
+
+  .not-found-frame-right {
+    translate: calc(100% - 5px) 0;
+  }
+}
+
 @media (min-width: 640px) {
   .invitation-message-card {
     min-height: 18rem;
