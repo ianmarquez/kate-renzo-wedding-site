@@ -29,7 +29,7 @@ export default function GiftsSection() {
   return (
     <section
       id="gifts"
-      className="flex min-h-svh items-center justify-center px-5 pt-5 pb-28 sm:px-10 sm:pt-10 sm:pb-32"
+      className="flex items-center justify-center px-5 pt-16 pb-28 sm:px-10 sm:pt-24 sm:pb-32"
     >
       <div className="relative isolate w-full max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card px-6 py-12 shadow-card sm:px-12 sm:py-14">
         <IvyCorners />

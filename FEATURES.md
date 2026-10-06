@@ -33,7 +33,7 @@ The ivy with 00 is the top left one, the ivy with 01 is the bottom left while th
 
 each section should feel like a card and the ivies will frame the card.
 
-each section should feel like a full-viewport card where practical, but the page must scroll naturally without CSS scroll snapping
+the hero fills at least one viewport; content sections follow their natural height with compact vertical spacing, and the page scrolls naturally without CSS scroll snapping
 
 each card section should have a bigger margin to make it feel like a set of cards.
 
@@ -70,7 +70,7 @@ This will be the first section of the page.
 4. Put an embedded Google Map for Ville Sommet in the media panel. It is full-height beside the details on desktop and 16:9 landscape on mobile.
 5. Directly below the venue description, render the complete address in italic text one canonical type size larger: `Ville Sommet, 5 J.P. Rizal Street, Sicat, Alfonso, Cavite, Philippines`.
 6. Render accessible Google Maps and Waze links to the venue pin. Each round icon must have its visible provider label centered beneath it.
-7. The Venue card hugs its content with `p-8` internal spacing. Its surrounding section still fills the viewport without scroll snapping.
+7. The Venue card hugs its content with `p-8` internal spacing. Its section follows the card height with compact outer vertical spacing.
 8. Do not render ivy in the Venue card.
 9. On desktop, the details are on the left and the venue illustration is on the right. On mobile, the details appear before the venue illustration.
 10. Keep `mt-20` spacing between the address and navigation links.
@@ -113,7 +113,7 @@ This will be the first section of the page.
 
 ## RSVP Section
 
-1. Render RSVP as a full-viewport section directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
+1. Render RSVP directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
 2. Use the `RSVP` eyebrow and `Save your seat!` as the `h2` heading.
 3. Render this response message: `We really hope you can make it! Please let us know if you’ll be joining us by November 30, 2026, so we can make sure there’s a seat - and plenty of food - waiting for you.` Set `November 30, 2026` in bold moss primary text.
 4. Below the message, render three centered, equal-width contact columns: Phone, Messenger, and Instagram. Use understated top dividers on the main card surface; do not use green supporting cards.
@@ -183,7 +183,7 @@ would truly make our day.`
 ### Page structure and styling
 
 - The invitation is a vertically scrolling experience. Its `main` element is a `100svh` scroll container without CSS scroll snapping, so the page always opens at the hero and all content can scroll naturally.
-- The Hero section is intentionally allowed to exceed one viewport because the invitation card follows the date. Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts remain viewport-sized sections where practical, presented as large white cards with generous outer margins: `20px` on small screens and `40px` from the `sm` breakpoint upward.
+- The Hero section fills at least one viewport and may grow because its invitation card follows the date. Venue, Timeline, Dress Code, Gallery, RSVP, and A Note on Gifts follow their content height instead of forcing a viewport height. Give each content section `64px` vertical outer spacing on small screens and `96px` from `sm` upward, while retaining `20px` / `40px` horizontal card margins. Gifts retain extra bottom clearance for the fixed navigation.
 - Keep each page section in its own file under `src/app/component/`: `hero.tsx`, `venue.tsx`, `timeline.tsx`, `dress-code.tsx`, `gallery.tsx`, `rsvp.tsx`, and `gifts.tsx`. Shared ivy, invitation-card, and contact icon primitives belong in `shared.tsx`; `src/app/page.tsx` should compose sections and contain only page-level routing behavior.
 - Provide a root `src/app/not-found.tsx` page that follows the invitation card language, hugs its content with a responsive maximum width, and links visitors back to `/` with a clear home CTA. Use all eleven gallery images (`0.jpg` through `10.jpg`) as rounded floating frames distributed around the centered 404 card: across the upper and lower edges and along both sides. Anchor the positions to the card so the frames overlap its edges by 15px on small screens, 10px from `md`, and 5px on desktop. Follow the Gallery section's gentle vertical drift and varied rotations. Keep the card above the photos, make the photos decorative and non-interactive, and respect reduced-motion preferences. Do not include an emphasized center image or gallery click behavior on the 404 page.
 - The card system uses a black-and-white base. Supporting information cards use `#F8FFF5` with a light green border. Rounded interface surfaces use a `1rem` radius; intentionally circular controls remain fully round. The sections have subtle shadows, and the ivy decoration frames their corners.

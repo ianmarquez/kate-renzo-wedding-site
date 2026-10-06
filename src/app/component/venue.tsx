@@ -4,7 +4,7 @@ export default function VenueSection() {
   return (
     <section
       id="venue"
-      className="flex min-h-svh items-center justify-center p-5 sm:p-10"
+      className="flex items-center justify-center px-5 py-16 sm:px-10 sm:py-24"
     >
       <div className="relative isolate w-full max-w-6xl overflow-hidden rounded-2xl border border-ink/10 bg-page p-8 shadow-card">
         <Image
