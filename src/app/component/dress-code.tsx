@@ -82,10 +82,7 @@ export default function DressCodeSection() {
           </div>
           <div className="mx-auto mt-9 max-w-3xl space-y-2 text-base leading-snug tracking-wide text-guidance sm:mt-11 sm:text-2xl">
             <p>Ladies: Long bright-colored garden dresses</p>
-            <p>
-              Gentlemen: Barong / linen long sleeves &amp; trousers in brown
-              hues
-            </p>
+            <p>Gentlemen: Barong &amp; trousers in brown hues</p>
           </div>
         </div>
       </div>

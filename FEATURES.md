@@ -115,7 +115,7 @@ This will be the first section of the page.
 
 1. Render RSVP directly after Gallery, using the established white card, ivy-corner frame, semantic Tailwind tokens, and `p-6 py-12` / `sm:px-12 sm:py-14` card spacing.
 2. Use the `RSVP` eyebrow and `Save your seat!` as the `h2` heading.
-3. Render this response message: `We really hope you can make it! Please let us know if you’ll be joining us by November 30, 2026, so we can make sure there’s a seat - and plenty of food - waiting for you.` Set `November 30, 2026` in bold moss primary text.
+3. Render this response message: `We really hope you can make it! Please let us know if you’ll be joining us by November 30, 2026, so we can make sure there’s a seat - and plenty of food - waiting for you.` Set `November 30, 2026` in bold moss primary text. Follow it with this understated italic RSVP note: `To allow all guests a night of relaxation, we have chosen to make our wedding an adults-only celebration.`
 4. Below the message, render three centered, equal-width contact columns: Phone, Messenger, and Instagram. Use understated top dividers on the main card surface; do not use green supporting cards.
 5. Each column heading includes its minimalist icon in moss primary color. Keep icons at the heading only, never on the individual contact rows. Use the proper Facebook Messenger and Instagram SVG icons.
 6. Use these contact values:
@@ -128,7 +128,7 @@ This will be the first section of the page.
 
 ## RSVP Response Page
 
-1. Create a dedicated, responsive response page at `/rsvp/`, styled with the established invitation card, ivy-corner frame, semantic tokens, and Framer Motion entry treatment.
+1. Create a dedicated, responsive response page at `/rsvp/`, styled with the established invitation card, ivy-corner frame, semantic tokens, and Framer Motion entry treatment. Beneath the introduction, include the understated italic note: `To allow all guests a night of relaxation, we have chosen to make our wedding an adults-only celebration.`
 2. The page is accessed from the `Register your RSVP` call-to-action in the invitation RSVP section; do not add it to the fixed navigation.
 3. Replace free-text names with a searchable invitee dropdown populated from the `public.invitees` database table. The guest must select an existing invitee before submitting an RSVP.
 4. Accept an optional `invitee` query parameter containing an invitee UUID. For example, `/rsvp/?invitee=550e8400-e29b-41d4-a716-446655440000` must look up and preselect that invitee.

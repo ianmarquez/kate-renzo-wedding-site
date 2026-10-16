@@ -262,6 +262,10 @@ export default function RsvpForm({
             We can&apos;t wait to celebrate with you. Find your invitation, then
             let us know if you&apos;ll be there.
           </p>
+          <p className="mx-auto mt-4 max-w-md text-sm italic leading-6 text-guidance sm:text-base">
+            To allow all guests a night of relaxation, we have chosen to make
+            our wedding an adults-only celebration.
+          </p>
 
           <form
             className="mt-10 space-y-8 text-left sm:mt-12"

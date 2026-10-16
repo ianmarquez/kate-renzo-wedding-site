@@ -27,6 +27,10 @@ export default function RsvpSection({
             so we can make sure there&apos;s a seat - and plenty of food -
             waiting for you.
           </p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm italic leading-6 text-guidance sm:text-base">
+            To allow all guests a night of relaxation, we have chosen to make
+            our wedding an adults-only celebration.
+          </p>
           <Link
             className="mt-8 inline-flex items-center rounded-full bg-moss px-6 py-3 text-sm font-semibold tracking-label text-page focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-moss sm:text-base"
             href="/rsvp/"
